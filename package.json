@@ -1,0 +1,37 @@
+{
+  "name": "kingmusi-blog",
+  "version": "1.0.0",
+  "description": "kingmusi 笔记存放站",
+  "main": "index.js",
+  "author": "kingmusi",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build:test": "vuepress build docs",
+    "build": "vuepress build docs && node build.js"
+  },
+  "devDependencies": {
+    "@types/n-readlines": "^1.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "@vuepress/plugin-google-analytics": "^2.0.0-beta.49",
+    "@vuepress/plugin-pwa": "^2.0.0-beta.49",
+    "@vuepress/plugin-pwa-popup": "^2.0.0-beta.49",
+    "@vuepress/plugin-register-components": "^2.0.0-beta.49",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.2.0",
+    "n-readlines": "^1.0.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4",
+    "vite-plugin-compression": "^0.5.1",
+    "vuepress": "^2.0.0-beta.48"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.3",
+    "particles.vue3": "^2.1.3",
+    "tsparticles": "^2.1.3",
+    "vue-window-size": "^1.1.2"
+  }
+}

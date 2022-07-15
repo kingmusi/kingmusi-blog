@@ -1,0 +1,102 @@
+# 生态
+
+## Plugin
+
+分为三类：
+
+1. `@babel/plugin-transform-xx`：转换插件，语法转换（会自动启用对应的语法插件）
+2. `@babel/plugin-proposal-xx`：转换插件，指代那些对 `ES Proposal`（即还未被 `ECMA-262` 正式发布的特性）进行转换的插件，一旦正式发布后，名称就会被重名为 `@babel/plugin-transform-xx`
+3. `@babel/plugin-syntax-xx`：语法插件，不需要单独配置，会被转换插件依赖，用于语法解析
+
+`plugins` 会从前到后顺序执行，前一个 `plugin` 的处理结果，将作为下一个 `plugin` 的输入
+
+## Preset
+
+一组官方推荐的预设插件的集合，可以理解为插件套餐，如：
+
+- `@babel/preset-env` for compiling ES2015+ syntax
+- `@babel/preset-typescript` for TypeScript
+- `@babel/preset-react` for React
+
+`Preset` 会从后往前执行
+
+`Plugin` 会运行在 `Preset` 之前
+
+## core-js
+
+[core-js](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fzloirock%2Fcore-js) 是完全模块化的 `javascript` 标准库。 包含 `ECMA-262` 至今为止大部分特性的 `polyfill`，如 `promises、symbols、collections、iterators、typed arrays` 等。目前在用的版本是 `core-js@2`、`core-js@3`，其中不推荐使用 `v2`，因为 `v3` 支持更多特性的 `polyfill`
+
+`core-js` 同时提供 3 个包
+
+1. `core-js`：最常用的版本，引入整个 `core-js` 或部分特性，就会把所有或对应的 `polyfill`，直接扩展到代码运行的全局环境中（修改原型等方式），业务代码可直接使用最新的 `ES` 写法
+
+   - 引入 `core-js` 即引入 `core-js/features`，`core-js/features` 里引入了全部的 `modules`
+   - 若部分特性引入则用 `features` 命名空间就行
+
+   ```js
+   import 'core-js'; //全部引入
+   import 'core-js/features/array/flat'; //针对性引入（feature命名空间）
+   [1, [2, 3], [4, [5]]].flat(2); // => [1, 2, 3, 4, 5]
+   ```
+
+2. `core-js-pure`：类似一种工具函数，不会注入到全局环境，所以整体引入无效。在使用的时候需要单独引入并使用对应 `polyfill` 的 `module` 方法，不能直接使用最新 `ES` 的写法
+
+   ```js
+   import flat from 'core-js-pure/features/array/flat';
+   flat([1, [2, 3], [4, [5]]], 2); // => [1, 2, 3, 4, 5]
+   ```
+
+3. `core-js-bundle`：编译打包好的版本，包含全部的 `polyfill` 特性，适合在浏览器里面通过 `script` 直接加载
+
+`core-js` 需安装在 `dependencies` 依赖里，并且通常情况不单独使用，要与 `babel` 集成
+
+## regenerator-runtime
+
+[regenerator-runtime](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Ffacebook%2Fregenerator%2Ftree%2Fmain%2Fpackages%2Fruntime) 模块来自 `facebook` 的 `regenerator` 模块。生成器函数、`async`、`await` 函数经 `babel` 编译后，`regenerator-runtime` 模块用于提供功能实现
+
+## @babel/preset-env
+
+`@babel/preset-env` 是一个智能预设，集合了一系列常用插件，会根据 `browserslist`、`compat-table` 等设置的目标环境，自动将代码中的新特性转换成目标浏览器支持的代码
+
+在 `@babel/preset-env` 7.15.8 版本依赖插件 `@babel/plugin-transform-regenerator`，该插件用于编译 `async` 和生成器。因为他依赖 `regenerator-transform->@babel/runtime->regenerator-runtime`，本质还是 `regenerator-runtime` 提供编译能力。故不需要格外安装 `regenerator-runtime`。
+
+需要手动安装 `corejs`
+
+`useBuiltIns` 的配置
+
+1. `entry`：，需要在代码中手动引入 `polyfill` 包
+
+   ```js
+   import 'core-js'; //手动引入
+   import 'regenerator-runtime/runtime'; //手动引入
+   
+   const c = [5, 6, 7].includes(2);
+   const d = async () => {
+     const e = await a;
+     console.log(e);
+   };
+   ```
+
+2. `usage`：会根据每个文件里面用到的 `ES 特性+target` 配置自动引入对应的 `polyfill`
+
+3. `false`：不引入 `corejs` 的 `polyfill`，只会做语法转换
+
+## @babel/runtime 系列
+
+`@babel/runtime` 系列包含以下三种：
+
+1. `@babel/runtime`
+2. `@babel/runtime-corejs2`：`@babel/runtime` + `core-js@2`
+3. `@babel/runtime-corejs3`：`@babel/runtime` + `core-js-pure@3`
+
+## @babel/plugin-transform-runtime
+
+通过使用`@babel/runtime` 系列内部的模块来代替重复的 `helpers`、对全局空间有污染的 `core-js` 和 `regenerator-runtime` 相关变量：
+
+1. 对 `Babel` 编译过程中各模块内重复产生的 `helper` 方法进行重新聚合（全部指向 `@babel/runtime/helpers` 这个 `module` 当中的辅助函数），以达到减少打包体积的目的.
+2. 避免全局补丁污染，对每个模块内提供"沙箱"式的补丁
+
+## babel-loader
+
+`webpack` 中使用 `babel` 加载需要编译的文件，注意 `exclude` 和 `include` 的使用
+

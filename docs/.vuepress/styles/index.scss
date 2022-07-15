@@ -1,0 +1,28 @@
+@import './article.scss';
+:root {
+  --c-brand: var(--main-6);
+  --c-brand-light: var(--main-4);
+  --c-border-dark: var(--main-6);
+  --c-text-lighter: var(--main-5);
+  --c-bg-lighter: var(--main-1);
+
+      /* 主题色 */
+  --main-1: #fff3f0;
+  --main-2: #ffd4cc;
+  --main-3: #ffafa3;
+  --main-4: #ff887a;
+  --main-5: #ff5d52;
+  --main-6: #f22f27;
+  --main-7: #cc1616;
+  --main-8: #a60a0f;
+  --main-9: #80010a;
+  --main-10: #590009;
+}
+
+html.dark {
+  --c-brand: var(--main-5);
+  --c-brand-light: var(--main-5);
+  --c-border-dark: var(--main-4);
+  --c-text-lighter: var(--main-5);
+  --c-bg-lighter: #ffb5b333;
+}

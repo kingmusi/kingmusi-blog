@@ -1,0 +1,19 @@
+{
+    "name": "\u6728\u53b6\u535a\u5ba2",
+    "short_name": "\u6728\u53b6\u535a\u5ba2",
+    "icons": [
+        {
+            "src": "/pwa/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/pwa/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
