@@ -1,6 +1,6 @@
 <template>
   <main class="home">
-    <div class="banner"></div>
+    <Banner />
     <div class="main">
       <ul class="left">
         <ListItem
@@ -30,9 +30,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import HomeFooter from '@theme/HomeFooter.vue'
-import ListItem from './HomeListItem.vue'
-import Author from './HomeAuthor.vue'
-import Category from './HomeCategory.vue'
+import ListItem from './ListItem.vue'
+import Author from './Author.vue'
+import Category from './Category.vue'
+import Banner from './Banner.vue'
 
 import Button from '@/components/common/Button.vue'
 
@@ -57,15 +58,6 @@ main.home {
   min-height: calc(100vh - var(--navbar-height));
   padding-left: 0;
   padding-right: 0;
-
-  .banner {
-    width: 100%;
-    height: calc(50vh - var(--navbar-height));
-    font-size: 5rem;
-    background-image: url('@/public/banner.webp');
-    background-size: cover;
-    background-position: center;
-  }
 
   .main {
     flex: 1;

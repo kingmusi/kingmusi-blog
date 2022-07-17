@@ -1,6 +1,6 @@
 <template>
   <div class="home-author">
-    <img src="@/public/avatar.jpeg" alt="avatar" />
+    <img src="@/public/avatar.webp" alt="avatar" />
     <span>木厶 | kingmusi</span>
     <img src="@/public/email.svg" alt="email" @click="toEmail" />
   </div>

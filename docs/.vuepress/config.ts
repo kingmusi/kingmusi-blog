@@ -65,7 +65,7 @@ export default defineUserConfig({
   ],
   // 改造页面
   alias: {
-    '@theme/Home.vue': path.resolve(__dirname, 'components', 'Home.vue'),
+    '@theme/Home.vue': path.resolve(__dirname, 'components', 'home', 'Home.vue'),
     '@theme/Sidebar.vue': path.resolve(__dirname, 'components', 'Sidebar.vue')
   },
   // 为客户端注入全局数据
@@ -104,6 +104,10 @@ export default defineUserConfig({
         alias: {
           '@': path.resolve(__dirname)
         }
+      },
+      // @ts-expect-error: vite 还没有给 ssr 配置项提供类型
+      ssr: {
+        noExternal: ['swiper']
       }
     }
   })
