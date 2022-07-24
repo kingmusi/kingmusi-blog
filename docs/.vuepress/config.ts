@@ -6,6 +6,7 @@ import { createPage } from '@vuepress/core'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { pwaPopupPlugin } from '@vuepress/plugin-pwa-popup'
+import { searchPlugin } from '@vuepress/plugin-search'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -51,7 +52,7 @@ export default defineUserConfig({
     googleAnalyticsPlugin({ id: 'G-40Q2D0LN9P' }),
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    pwaPlugin({ skipWaiting: true }),
+    pwaPlugin({ skipWaiting: false }),
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     pwaPopupPlugin({
@@ -61,7 +62,8 @@ export default defineUserConfig({
           buttonText: '刷新'
         }
       }
-    })
+    }),
+    searchPlugin({})
   ],
   // 改造页面
   alias: {

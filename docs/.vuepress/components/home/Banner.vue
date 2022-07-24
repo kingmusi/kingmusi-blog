@@ -3,11 +3,14 @@
     <Swiper
       class="swiper-wrapper"
       :modules="[Parallax, Autoplay]"
-      :speed="1300"
-      :allow-touch-move="false"
-      :autoplay="true"
+      :speed="600"
+      :touch-ratio="1.5"
+      :autoplay="{
+        autoplay: true,
+        pauseOnMouseEnter: true,
+        disableOnInteraction: false
+      }"
       :parallax="true"
-      @swiper="onSwiper"
       @transition-start="transitionStart"
       @transition-end="transitionEnd"
       @init="(s) => s.emit('transitionEnd')"
@@ -22,7 +25,7 @@
       </swiper-slide>
     </Swiper>
 
-    <div v-show="swiperRef?.activeIndex !== 0" class="button-prev button" @click="!lock && swiperRef.slidePrev()">
+    <!-- <div v-show="swiperRef?.activeIndex !== 0" class="button-prev button" @click="!lock && swiperRef.slidePrev()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
         <g id="arrow-svg-home">
           <g id="circ" class="cls-1">
@@ -34,9 +37,9 @@
           <path id="line" d="M120,0H0" class="cls-3"></path>
         </g>
       </svg>
-    </div>
+    </div> -->
     <!--左箭头-->
-    <div v-show="swiperRef?.activeIndex !== Object.keys(bannerImages).length - 1" class="button-next button" @click="!lock && swiperRef.slideNext()">
+    <!-- <div v-show="swiperRef?.activeIndex !== Object.keys(bannerImages).length - 1" class="button-next button" @click="!lock && swiperRef.slideNext()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
         <g id="arrow-svg-home">
           <g id="circ" class="cls-1">
@@ -48,13 +51,13 @@
           <path id="line" d="M120,0H0" class="cls-3"></path>
         </g>
       </svg>
-    </div>
+    </div> -->
     <!--右箭头-->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+// import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Parallax, Autoplay } from 'swiper'
 import 'swiper/css'
@@ -64,10 +67,10 @@ import 'swiper/css/autoplay'
 const bannerImages = import.meta.globEager('../../public/banner/*.webp')
 const bannerText = ['A', 'N', 'M', 'I']
 
-const swiperRef = ref()
-const onSwiper = (swiper: any) => {
-  swiperRef.value = swiper
-}
+// const swiperRef = ref()
+// const onSwiper = (swiper: any) => {
+//   swiperRef.value = swiper
+// }
 
 let lock = false
 const bgColor = ['rgb(179, 189, 196)', 'rgb(180, 183, 166)', 'rgb(140, 152, 187)']
