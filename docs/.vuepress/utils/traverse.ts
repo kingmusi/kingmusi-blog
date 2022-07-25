@@ -61,21 +61,22 @@ export default function traverse() {
         if (!/.md$/.test(thirdDirName)) continue // 只要 markdown 文档
 
         const link = `/${prefix}/${firstDirName}/${secondDirName}/${thirdDirName}`
+        const text = thirdDirName.replace('.md', '')
 
         // 放入 sidebar 文档数据
         sidebarObj2.children.push({
-          text: thirdDirName,
-          link
+          text,
+          link: link.replace('.md', '.html')
         })
 
         // 生成第三层 category markdown 数据
-        categoryObj.markdown += `- [${thirdDirName.replace('.md', '')}](${encodeURI(`${secondDirName}/${thirdDirName}`)})\n\r`
+        categoryObj.markdown += `- [${text}](${encodeURI(`${secondDirName}/${thirdDirName}`)})\n\r`
 
         // 放入 list 数据
         list.push({
           category: category.toLocaleLowerCase(),
           subcatalog: subcatalog.toLocaleLowerCase(),
-          title: thirdDirName.replace('.md', ''),
+          title: text,
           content: '',
           path: link,
           time: Date.parse(fs.statSync(path.join(notePath, firstDirName, secondDirName, thirdDirName)).mtime.toString())

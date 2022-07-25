@@ -6,7 +6,7 @@ import { createPage } from '@vuepress/core'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { pwaPopupPlugin } from '@vuepress/plugin-pwa-popup'
-import { searchPlugin } from '@vuepress/plugin-search'
+import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -63,7 +63,11 @@ export default defineUserConfig({
         }
       }
     }),
-    searchPlugin({})
+    docsearchPlugin({
+      apiKey: '4488710a3e7070c0782ffe7717b52799',
+      indexName: 'kingmusi',
+      appId: 'XNAMRA0CZ0'
+    })
   ],
   // 改造页面
   alias: {
