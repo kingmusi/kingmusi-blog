@@ -22,13 +22,14 @@ export default defineUserConfig({
   dest: path.join(__dirname, '..', '..', 'dist'),
   head: [
     ['link', { rel: 'icon', href: '/logo.svg' }], // 网站logo
-    ['link', { rel: 'manifest', href: '/pwa/manifest.webmanifest' }],
+    ['link', { rel: 'manifest', href: '/pwa/manifest.webmanifest' }], // pwa
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/pwa/apple-touch-icon.png' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/pwa/favicon-32x32.png' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/pwa/favicon-16x16.png' }],
     ['link', { rel: 'shortcut icon', href: '/pwa/favicon.ico' }],
     ['meta', { rel: 'theme-color', content: '#ffffff' }],
-    ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }]
+    ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }], // pwa
+    ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }] // 百度收录
   ],
   theme: defaultTheme({
     logo: '/logo.svg', // 主题logo
