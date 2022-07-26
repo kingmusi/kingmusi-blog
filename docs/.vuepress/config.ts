@@ -29,7 +29,8 @@ export default defineUserConfig({
     ['link', { rel: 'shortcut icon', href: '/pwa/favicon.ico' }],
     ['meta', { rel: 'theme-color', content: '#ffffff' }],
     ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }], // pwa
-    ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }] // 百度收录
+    ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }], // 百度收录验证
+    ['meta', { name: '360-site-verification', content: 'bbeb6891b4135a6e65877a7e7d4be2cd' }] // 360 收录验证
   ],
   theme: defaultTheme({
     logo: '/logo.svg', // 主题logo
