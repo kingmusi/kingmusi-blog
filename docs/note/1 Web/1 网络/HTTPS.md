@@ -2,7 +2,7 @@
 
 ## 工作流程
 
-![img](https://gitee.com/kingmusi/imgs/raw/master/blog/20211018190801.png)
+![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202207280030498.png)
 
 1. 用户在浏览器发起HTTPS请求，默认使用服务端的443端口进行连接；
 2. HTTPS需要使用一套**CA数字证书**，证书内会附带一个**公钥Pub**，而与之对应的**私钥Private**保留在服务端不公开；

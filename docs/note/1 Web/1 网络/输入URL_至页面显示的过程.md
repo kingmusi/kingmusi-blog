@@ -23,7 +23,7 @@
    - 客户端发送一个 **FIN=1**，**Seq=U** 的包到服务器
 - 服务器发回 **FIN=1**，**ACK=U+1**， **Seq=V** 的响应包 ，此时处于半关闭状态，但可能服务器端还有一个数据要发送
    - 数据完全发送完毕后，服务器发送 **FIN=1**，**ACK=U+1**， **Seq=W** 的响应包 
-- 客户端发送 **ACK=W+1**， **Seq=U+1 ** 的包
+- 客户端发送 **ACK=W+1**， **Seq=U+1** 的包
 
 ## 渲染页面的过程
 
@@ -49,10 +49,10 @@
    2. **HTML**解析器遇到`没有 async 和 defer 的 script`时，`同步执⾏`，即在脚本下载和执⾏时解析器会暂停
    3. 当解析器遇到设置了`async 的script`时，会异步下载，且在下载完成后，解析器执行脚本
    5. 所有`defer脚本`会异步下载，并在最后按照在⽂档出现的顺序执⾏
-   5. 当⽂档完成解析，**document.readState**变成**interactive**，并触发触发 **DOMContentLoaded** 事件 
+   5. 当⽂档完成解析，**document.readState**变成**interactive**，并触发 **DOMContentLoaded** 事件 
    7. 此时⽂档完全解析完成，浏览器可能还在等待如图⽚等内容加载，等这些`内容完成载⼊`并且`所有异步脚本完成载⼊和执⾏`，**document.readState**变为**complete**，**window**触发 **load** 事件
 6. 最后执行 **ajax**
 7.  请求
 
-![img](https://gitee.com/kingmusi/imgs/raw/master/blog/20211014173648.png)
+![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202207280032031.png)
 
