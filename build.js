@@ -94,7 +94,7 @@ function delFile(path, reservePath) {
 async function start() {
   await sitemap()
   git()
-  // delFile(distPath)
+  delFile(distPath)
 }
 
 start()
