@@ -8,7 +8,7 @@
 
 ```html
 <head>
-	<title></title>
+  <title></title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 </head>
@@ -16,7 +16,7 @@
 
 ![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202202202013164.png)
 
-> 1. `<title>`、` meta description` 和` meta` `keywords` 三者的权重依次减小
+> 1. `<title>`、`<meta description>` 和 `<meta` `keywords>` 三者的权重依次减小
 > 2. 不能大量堆砌关键字，搜索引擎可能会降低这个网站的排名甚至将其列入黑名单
 
 ## 使用语义化标签
@@ -26,7 +26,7 @@
   ```html
   <h1>
     <!-- logo 图片使用 background 设置 -->
-  	<a href="www.jingdong.com">京东</a>
+    <a href="www.jingdong.com">京东</a>
   </h1>
   ```
 
