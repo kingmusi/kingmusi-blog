@@ -8,9 +8,11 @@ import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { pwaPopupPlugin } from '@vuepress/plugin-pwa-popup'
 import { docsearchPlugin } from '@vuepress/plugin-docsearch'
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import katex from 'markdown-it-katex'
+import katexTag from './utils/katex-tag'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -121,7 +123,7 @@ export default defineUserConfig({
       template: {
         compilerOptions: {
           // katex
-          isCustomElement: (tag) => ['mi', 'mo', 'mn', 'mrow', 'annotation', 'semantics', 'math'].includes(tag)
+          isCustomElement: (tag) => katexTag.includes(tag)
         }
       }
     },
