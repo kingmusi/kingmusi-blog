@@ -8,6 +8,9 @@ import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { pwaPopupPlugin } from '@vuepress/plugin-pwa-popup'
 import { docsearchPlugin } from '@vuepress/plugin-docsearch'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import katex from 'markdown-it-katex'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -29,6 +32,8 @@ export default defineUserConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/pwa/favicon-16x16.png' }],
     ['link', { rel: 'shortcut icon', href: '/pwa/favicon.ico' }],
     ['meta', { rel: 'theme-color', content: '#ffffff' }],
+    ['link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css' }], // katex
+    ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css' }], // katex
     ['link', { rel: 'preconnect', href: 'https://www.googletagmanager.com' }], // googleAnalytics预连接
     ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }], // pwa
     ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }], // 百度收录验证
@@ -73,6 +78,10 @@ export default defineUserConfig({
       appId: 'XNAMRA0CZ0'
     })
   ],
+  extendsMarkdown: (md) => {
+    md.use(katex) // katex
+    md.linkify.set({ fuzzyEmail: false })
+  },
   // 改造页面
   alias: {
     '@theme/Home.vue': path.resolve(__dirname, 'components', 'home', 'Home.vue'),
@@ -108,6 +117,14 @@ export default defineUserConfig({
   clientConfigFile: vuepressPath.resolve(__dirname, 'client-config.ts'),
   // vite 配置
   bundler: viteBundler({
+    vuePluginOptions: {
+      template: {
+        compilerOptions: {
+          // katex
+          isCustomElement: (tag) => ['mi', 'mo', 'mn', 'mrow', 'annotation', 'semantics', 'math'].includes(tag)
+        }
+      }
+    },
     viteOptions: {
       plugins: [viteCompression()],
       resolve: {
