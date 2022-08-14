@@ -53,7 +53,7 @@
    ```
 
    ```js
-   const {['name']: name, ...rest} = {
+   const {name, ...rest} = {
        name: 'kingmusi',
        age: 18
    }

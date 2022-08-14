@@ -31,7 +31,7 @@ const pro = new Promise((resolve, reject)=>{
 
 - 使用
 
-```JS
+```js
 promise.then(res => {
     // resolved 后的代码
 }, err => {

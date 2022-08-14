@@ -48,9 +48,11 @@
 
 *node中有所不同*
 
-宏队列：**setTimeout**，**setInterval**，**setImmediate**，当他们之间的时间间隔相差10时，谁先谁后都是有可能的
+宏队列：**setTimeout**，**setInterval**，**setImmediate**，**ajax**，**dom 操作**当他们之间的时间间隔相差10时，谁先谁后都是有可能的
 
-微队列：**Promise**、**process.nextTick**（但是 **process.nextTick** 比 **Promise**优先）
+微队列：**Promise**、**async/await**、**MutationObserver**、**queueMicrotask**、**process.nextTick**
+
+> **requestAnimationFrame** 和 **requestIdleCallback** 理论上属于宏任务，但因为还和帧有关，所以实际执行时间不一定按规则走
 
 ## 面试题目与解答
 

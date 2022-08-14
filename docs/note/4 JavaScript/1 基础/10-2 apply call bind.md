@@ -18,7 +18,7 @@ Function.prototype.myCall = function (context = window, ...arg) {
   const symbol = Symbol('fn')
   context[symbol] = this
   const result = context[symbol](...arg)
-  delete context.fn
+  delete context[symbol]
   return result
 }
 ```
@@ -32,7 +32,7 @@ Function.prototype.myApply = function (context = window, arg = []) {
   const symbol = Symbol('fn')
   context[symbol] = this
   const result = context[symbol](...arg)
-  delete context.fn
+  delete context[symbol]
   return result
 }
 ```
