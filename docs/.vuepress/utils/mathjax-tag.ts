@@ -1,4 +1,5 @@
 export default [
+  'mjx-container',
   'math',
   'annotation',
   'semantics',

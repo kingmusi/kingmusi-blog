@@ -9,10 +9,8 @@ import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { pwaPopupPlugin } from '@vuepress/plugin-pwa-popup'
 import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import katex from 'markdown-it-katex'
-import katexTag from './utils/katex-tag'
+import mathjax3 from 'markdown-it-mathjax3'
+import mathjaxTag from './utils/mathjax-tag'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -34,8 +32,6 @@ export default defineUserConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/pwa/favicon-16x16.png' }],
     ['link', { rel: 'shortcut icon', href: '/pwa/favicon.ico' }],
     ['meta', { rel: 'theme-color', content: '#ffffff' }],
-    ['link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css' }], // katex
-    ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css' }], // katex
     ['link', { rel: 'preconnect', href: 'https://www.googletagmanager.com' }], // googleAnalytics预连接
     ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }], // pwa
     ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }], // 百度收录验证
@@ -81,7 +77,7 @@ export default defineUserConfig({
     })
   ],
   extendsMarkdown: (md) => {
-    md.use(katex) // katex
+    md.use(mathjax3)
     md.linkify.set({ fuzzyEmail: false })
   },
   // 改造页面
@@ -123,7 +119,7 @@ export default defineUserConfig({
       template: {
         compilerOptions: {
           // katex
-          isCustomElement: (tag) => katexTag.includes(tag)
+          isCustomElement: (tag) => mathjaxTag.includes(tag)
         }
       }
     },
