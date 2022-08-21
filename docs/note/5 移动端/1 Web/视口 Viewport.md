@@ -44,5 +44,5 @@ const viewWidth = document.documentElement.clientWidth || window.innerWidth
 
 **全局处理**
 
-1. **mate**标签中的 **viewport** 属性 ， **initial-scale** 设置为 **0.5 **
+1. **mate**标签中的 **viewport** 属性 ， **initial-scale** 设置为 **0.5**
 2. **rem** 按照设计稿标准⾛即
