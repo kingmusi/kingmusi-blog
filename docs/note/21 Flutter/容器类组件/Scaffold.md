@@ -9,8 +9,6 @@
 | bottomNavigationBar  | 底部导航栏 |
 | floatingActionButton | 漂浮按钮   |
 
-![image-20220112103934934](/Users/tal/Library/Application Support/typora-user-images/image-20220112103934934.png)
-
 ![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages//img/20220112104102.png)
 
 ## AppBar

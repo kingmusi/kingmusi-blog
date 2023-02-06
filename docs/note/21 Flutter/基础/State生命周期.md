@@ -2,7 +2,7 @@
 
 ## 图解
 
-![](https://gitee.com/kingmusi/imgs/raw/master/blog/202201032207914.png)
+![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202302051928325.png)
 
 ## 例子
 

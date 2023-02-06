@@ -146,3 +146,25 @@ obj[Symbol('d')] = 'd' // Symbol属性
 | `for in`                       | 有       | 枚举                   | 无         | `a b`                   |
 
 > 此节具体在书 **8.2 创建对象**
+
+## 遍历顺序
+
+1. 所有数字键按升序排序
+2. 所有字符串键、symbol键按照它们被假如对象的顺序排序
+
+```js
+const obj = {
+    a: 1,
+    0: 1,
+    c: 1,
+    2: 1,
+    b: 1,
+    1: 1
+}
+obj.d = 1
+
+for (const k in obj) {
+    console.log(k) // 0 1 2 a c b d
+}
+```
+

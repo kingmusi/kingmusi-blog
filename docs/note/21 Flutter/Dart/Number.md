@@ -11,7 +11,7 @@ Dart 支持两种 Number 类型：
 
 int 和 double 都是 **num** 的子类
 
-![](https://gitee.com/kingmusi/imgs/raw/master/blog/202112070035380.png)
+![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202302051902935.png)
 
 ## 声明
 

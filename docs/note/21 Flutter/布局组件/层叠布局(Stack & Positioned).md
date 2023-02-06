@@ -59,8 +59,6 @@ ConstrainedBox(
 )
 ```
 
-![image-20220110191515284](/Users/tal/Library/Application Support/typora-user-images/image-20220110191515284.png)
-
 1. 第一个子文本组件没有指定定位，并且`alignment`值为`Alignment.center`，所以它会居中显示
 2. 第二个子文本组件只指定了水平方向的定位(`left`)，所以属于部分定位，所以在垂直方向的对齐方式则会按照`alignment`指定的对齐方式对齐，即垂直方向居中
 
