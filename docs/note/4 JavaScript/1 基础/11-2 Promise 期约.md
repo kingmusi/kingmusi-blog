@@ -106,6 +106,13 @@ promise.then(res => {
   })
   ```
 
+## unhandledrejection 和 rejectionhandled
+
+事件在 `window` 上触发
+
+- `unhandledrejection `：在一个事件循环中，当 Promise 被拒绝，并且没有提供拒绝处理程序时，触发该事件
+- `rejectionhandled`：在一个事件循环之后，当 Promise 被拒绝时，若拒绝处理程序被调用，触发该事件
+
 ## **Promise.resolve()** 和 **Promise.reject()**
 
 ```js

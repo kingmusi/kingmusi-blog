@@ -21,8 +21,9 @@ const map = new Map([
   ['python', getIcon('python')],
   ['git', getIcon('git')],
   ['算法', getIcon('algorithm')],
-  ['工程化', getIcon('webpack')],
-  ['flutter', getIcon('flutter')]
+  ['前端工程化', getIcon('webpack')],
+  ['flutter', getIcon('flutter')],
+  ['数学', getIcon('math')]
 ])
 
 export default map

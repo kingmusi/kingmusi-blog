@@ -2,6 +2,49 @@
 
 > 类只是语法糖，本质仍然是原型和构造函数的概念
 
+## 类与函数声明的差异
+
+- 函数声明可以被提升。类声明与 **let** 声明相似，**不能被提升**，真正执行声明语句前，都一直存在于临时死区中
+- 类声明中的所有代码自动运行在**严格模式**下
+- 类中的所有**方法**都是**不可枚举**的
+- 使用 **new** 关键字以外的方式调用类的构造函数，都会导致程序运行错误
+- 在类中**修改类名**会导致程序报错
+
+```js
+// 用函数声明模拟类声明
+// 类声明与 let 声明类似，且因为是 IIFE，所以内部不可能修改外部的声明
+let Person = (function() {
+	"use strict"; // 严格模式
+
+	// 构造函数
+	const Person = function(name) {
+		// 确保通过关键字 new 调用该函数
+		if (typeof new.target === "undefined") {
+			throw new Error("Constructor must be called with new.");
+		}
+		this.name = name;
+	}
+
+	Object.defineProperty(Person.prototype, "sayName", {
+		value: function() {
+			// 确保通过关键字 new 调用该方法
+			if (typeof new.target !== "undefined") {
+				throw new Error("Method cannot be called with new.");
+			}
+			console.log(this.name);
+		},
+		enumerable: false, // 不可枚举
+		writable: true,
+		configurable: true
+	})
+
+	return Person;
+})();
+
+const p = new Person("kingmusi");
+console.log(p.__proto__) // {} 内部方法不可枚举
+```
+
 ## 类定义
 
 1. 类声明
@@ -209,6 +252,64 @@
   
   class Foo extends Interface {}
   const foo = new Foo() // Uncaught Error: 此接口必需含有 foo 方法
+  ```
+
+##### 4. 继承表达式
+
+- 只要表达式可以被解析为一个**函数**且具有 ``[[Construce]]` 属性和原型，就可以被 `extends` 继承
+
+  ```js
+  function Super(name) {
+  	this.name = name;
+  }
+  Super.prototype.sayName = function() {
+  	console.log(this.name);
+  }
+  
+  class Child extends Super {
+  	constructor(name) {
+  		super(name);
+  	}
+  }
+  
+  const p = new Child('kingmusi');
+  p.sayName(); // test
+  ```
+
+- 创建 mixin：
+
+  ```js
+  const printMixin = {
+  	print() {
+  		console.log(this.name);
+  	},
+  	println() {
+  		console.log(`${this.name}\n`);
+  	}
+  }
+  
+  const clearMixin = {
+  	clear() {
+  		this.name = ''
+  	}
+  }
+  
+  function mixin(...mixins) {
+  	let base = function() {}
+  	Object.assign(base.prototype, ...mixins)
+  	return base
+  }
+  
+  class Person extends mixin(printMixin, clearMixin) {
+  	constructor(name) {
+  		super();
+  		this.name = name;
+  	}
+  }
+  
+  const p = new Person('kingmusi')
+  p.print() // kingmusi
+  p.println() // kingmusi
   ```
 
 > 可以通过混合、组合实现多继承，具体参考书
