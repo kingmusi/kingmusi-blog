@@ -23,7 +23,8 @@ const map = new Map([
   ['算法', getIcon('algorithm')],
   ['前端工程化', getIcon('webpack')],
   ['flutter', getIcon('flutter')],
-  ['数学', getIcon('math')]
+  ['数学', getIcon('math')],
+  ['游戏', getIcon('game')]
 ])
 
 export default map
