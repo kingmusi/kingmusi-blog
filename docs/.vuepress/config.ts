@@ -7,9 +7,9 @@ import { createPage } from '@vuepress/core'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { docsearchPlugin } from '@vuepress/plugin-docsearch'
-
-import mathjax3 from 'markdown-it-mathjax3'
-import mathjaxTag from './utils/mathjax-tag'
+import { markdownMathPlugin } from '@vuepress/plugin-markdown-math'
+import { photoSwipePlugin } from '@vuepress/plugin-photo-swipe'
+import { watermarkPlugin } from '@vuepress/plugin-watermark'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -53,23 +53,18 @@ export default defineUserConfig({
   }),
   shouldPrefetch: false,
   plugins: [
+    watermarkPlugin({}),
+    markdownMathPlugin({}),
+    photoSwipePlugin({}),
     // google 埋点
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     googleAnalyticsPlugin({ id: 'G-40Q2D0LN9P' }),
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    pwaPlugin({ skipWaiting: false }),
+    pwaPlugin({}),
     docsearchPlugin({
       apiKey: '4488710a3e7070c0782ffe7717b52799',
       indexName: 'kingmusi',
       appId: 'XNAMRA0CZ0'
     })
   ],
-  extendsMarkdown: (md) => {
-    md.use(mathjax3)
-    md.linkify.set({ fuzzyEmail: false })
-  },
   // 改造页面
   alias: {
     '@theme/VPHome.vue': path.resolve(__dirname, 'components', 'home', 'Home.vue'),
@@ -105,14 +100,6 @@ export default defineUserConfig({
   clientConfigFile: vuepressPath.resolve(__dirname, 'client-config.ts'),
   // vite 配置
   bundler: viteBundler({
-    vuePluginOptions: {
-      template: {
-        compilerOptions: {
-          // katex
-          isCustomElement: (tag) => mathjaxTag.includes(tag)
-        }
-      }
-    },
     viteOptions: {
       plugins: [viteCompression()],
       resolve: {
