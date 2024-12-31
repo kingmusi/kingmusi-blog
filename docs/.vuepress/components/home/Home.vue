@@ -23,13 +23,11 @@
     </div>
     <HomeFooter />
   </main>
-
-  <Particles id="tsparticles" :particles-init="particlesInit" :options="tsParticlesOptions" />
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import HomeFooter from '@theme/HomeFooter.vue'
+import HomeFooter from '@theme/VPHomeFooter.vue'
 import ListItem from './ListItem.vue'
 import Author from './Author.vue'
 import Category from './Category.vue'
@@ -37,16 +35,8 @@ import Banner from './Banner.vue'
 
 import Button from '@/components/common/Button.vue'
 
-import { loadFull } from 'tsparticles'
-import tsParticlesOptions from '@/utils/ts-particles-option.json'
-
-const particlesInit = async (engine: any) => {
-  await loadFull(engine)
-}
-
 const router = useRouter()
 
-// eslint-disable-next-line no-undef
 const list = __LIST__
 </script>
 

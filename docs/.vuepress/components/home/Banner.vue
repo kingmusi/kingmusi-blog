@@ -6,98 +6,60 @@
       :speed="600"
       :touch-ratio="1.5"
       :autoplay="{
-        autoplay: true,
         pauseOnMouseEnter: true,
         disableOnInteraction: false
       }"
       :parallax="true"
       @transition-start="transitionStart"
       @transition-end="transitionEnd"
-      @init="(s) => s.emit('transitionEnd')"
+      @init="(s: any) => s.emit('transitionEnd')"
     >
-      <swiper-slide v-for="(item, index) of Object.values(bannerImages)" :key="index" class="swiper-slide">
+      <swiper-slide v-for="(_, index) of Object.values(bannerText)" :key="index" class="swiper-slide">
         <div class="title" data-swiper-parallax="-130%">
           <h3>{{ bannerText[index] }}</h3>
         </div>
         <div class="img-box">
-          <img :src="item.default" style="transform: translateX(0)" />
+          <img :src="`/banner/${index + 1}.webp`" style="transform: translateX(0)" />
         </div>
       </swiper-slide>
     </Swiper>
 
-    <!-- <div v-show="swiperRef?.activeIndex !== 0" class="button-prev button" @click="!lock && swiperRef.slidePrev()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
-        <g id="arrow-svg-home">
-          <g id="circ" class="cls-1">
-            <circle cx="42" cy="42" r="40" class="cls-4"></circle>
-          </g>
-          <g id="arrow">
-            <path id="arrow-trg" d="M.983,6.929,4.447,3.464.983,0,0,.983,2.482,3.464,0,5.946Z"></path>
-          </g>
-          <path id="line" d="M120,0H0" class="cls-3"></path>
-        </g>
-      </svg>
-    </div> -->
-    <!--左箭头-->
-    <!-- <div v-show="swiperRef?.activeIndex !== Object.keys(bannerImages).length - 1" class="button-next button" @click="!lock && swiperRef.slideNext()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
-        <g id="arrow-svg-home">
-          <g id="circ" class="cls-1">
-            <circle cx="42" cy="42" r="40" class="cls-4"></circle>
-          </g>
-          <g id="arrow">
-            <path id="arrow-trg" d="M.983,6.929,4.447,3.464.983,0,0,.983,2.482,3.464,0,5.946Z" class="cls-2"></path>
-          </g>
-          <path id="line" d="M120,0H0" class="cls-3"></path>
-        </g>
-      </svg>
-    </div> -->
-    <!--右箭头-->
   </div>
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Parallax, Autoplay } from 'swiper'
+import { Parallax, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/parallax'
 import 'swiper/css/autoplay'
 
-const bannerImages = import.meta.globEager('../../public/banner/*.webp')
-const bannerText = ['A', 'N', 'M', 'I']
+const bannerText = ['M', 'U', 'S', 'I']
 
-// const swiperRef = ref()
-// const onSwiper = (swiper: any) => {
-//   swiperRef.value = swiper
-// }
-
-let lock = false
 const bgColor = ['rgb(179, 189, 196)', 'rgb(180, 183, 166)', 'rgb(140, 152, 187)']
 const transitionStart = (swiper: any) => {
-  lock = true //锁住按钮
   const slides = swiper.slides
-  const imgBox = slides.eq(swiper.previousIndex).find('.img-box') //图片包装器
-  const imgPrev = slides.eq(swiper.previousIndex).find('img') //当前图片
-  const imgActive = slides.eq(swiper.activeIndex).find('img') //下一张图片
-  const derection = swiper.activeIndex - swiper.previousIndex
-  swiper.$el.css('background-color', bgColor[swiper.activeIndex]) //背景颜色动画
-  imgBox.transform('matrix(0.6, 0, 0, 0.6, 0, 0)')
-  imgPrev.transition(1000).transform('matrix(1, 0, 0, 1, 0, 0)') //图片缩放视
-  swiper.slides.eq(swiper.previousIndex).find('h3').transition(1000).css('color', 'rgba(255,255,255,0)')
-  imgPrev.transitionEnd(function () {
-    imgActive.transition(1300).transform('translate3d(0, 0, 0) matrix(1, 0, 0, 1, 0, 0)') //图片位移视差
-    imgPrev.transition(1300).transform('translate3d(' + 60 * derection + '%, 0, 0) matrix(1, 0, 0, 1, 0, 0)')
-  })
+  const imgBox = slides[swiper.previousIndex].querySelector('.img-box') //图片包装器
+  const imgPrev = slides[swiper.previousIndex].querySelector('img') //当前图片
+  swiper.el.style.backgroundColor = bgColor[swiper.activeIndex] //背景颜色动画
+  imgBox.style.transform = 'matrix(0.6, 0, 0, 0.6, 0, 0)' //图片缩放视差
+  imgPrev.style.transition = 'transform 1s cubic-bezier(0.5, 0, 0, 1)' //图片位移视差
+  imgPrev.style.transform = 'matrix(1, 0, 0, 1, 0, 0)' //图片位移视差
+
+  slides[swiper.previousIndex].querySelector('h3').style.transition = 'color 1s' //标题颜色动画
+  slides[swiper.activeIndex].querySelector('h3').style.color = 'rgba(255,255,255,0)' //标题颜色动画
 }
 
 const transitionEnd = (swiper: any) => {
-  swiper.slides.eq(swiper.activeIndex).find('.img-box').transform('matrix(1, 0, 0, 1, 0, 0)')
-  const imgActive = swiper.slides.eq(swiper.activeIndex).find('img')
-  imgActive.transition(1000).transform('matrix(1, 0, 0, 1, 0, 0)')
-  swiper.slides.eq(swiper.activeIndex).find('h3').transition(1000).css('color', 'rgba(255,255,255,1)')
-
-  imgActive.transitionEnd(() => (lock = false))
+  const slide = swiper.slides[swiper.activeIndex]
+  const imgBox = slide.querySelector('.img-box')
+  imgBox.style.transform = 'matrix(1, 0, 0, 1, 0, 0)'
+  const img = slide.querySelector('img')
+  img.style.transition = 'transform 1s cubic-bezier(0.5, 0, 0, 1)'
+  img.style.transform = 'matrix(1, 0, 0, 1, 0, 0)'
+  const h3 = slide.querySelector('h3')
+  h3.style.transition = 'color 1s'
+  h3.style.color = 'rgba(255,255,255,1)'
 }
 </script>
 

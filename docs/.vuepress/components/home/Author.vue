@@ -1,8 +1,8 @@
 <template>
   <div class="home-author">
-    <img src="@/public/avatar.webp" alt="avatar" />
+    <img src="/avatar.webp" alt="avatar" />
     <span>木厶 | kingmusi</span>
-    <img src="@/public/email.svg" alt="email" @click="toEmail" />
+    <img src="/email.svg" alt="email" @click="toEmail" />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ const toEmail = () => window.open('mailto:543657931@qq.com')
   padding: 2rem;
   border: 2px solid var(--c-brand-light);
   border-radius: 8px;
-  background-color: var(--c-bg);
+  background-color: transparent;
   box-sizing: border-box;
   font-weight: 600;
 

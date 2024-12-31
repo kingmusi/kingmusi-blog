@@ -6,7 +6,6 @@ import { path as vuepressPath } from '@vuepress/utils'
 import { createPage } from '@vuepress/core'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
-import { pwaPopupPlugin } from '@vuepress/plugin-pwa-popup'
 import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 
 import mathjax3 from 'markdown-it-mathjax3'
@@ -52,6 +51,7 @@ export default defineUserConfig({
       }
     ]
   }),
+  shouldPrefetch: false,
   plugins: [
     // google 埋点
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -60,16 +60,6 @@ export default defineUserConfig({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     pwaPlugin({ skipWaiting: false }),
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    pwaPopupPlugin({
-      locales: {
-        '/': {
-          message: '博客已更新',
-          buttonText: '刷新'
-        }
-      }
-    }),
     docsearchPlugin({
       apiKey: '4488710a3e7070c0782ffe7717b52799',
       indexName: 'kingmusi',
@@ -82,8 +72,8 @@ export default defineUserConfig({
   },
   // 改造页面
   alias: {
-    '@theme/Home.vue': path.resolve(__dirname, 'components', 'home', 'Home.vue'),
-    '@theme/Sidebar.vue': path.resolve(__dirname, 'components', 'Sidebar.vue')
+    '@theme/VPHome.vue': path.resolve(__dirname, 'components', 'home', 'Home.vue'),
+    '@theme/VPSidebar.vue': path.resolve(__dirname, 'components', 'Sidebar.vue')
   },
   // 为客户端注入全局数据
   define: {
@@ -130,7 +120,6 @@ export default defineUserConfig({
           '@': path.resolve(__dirname)
         }
       },
-      // @ts-expect-error: vite 还没有给 ssr 配置项提供类型
       ssr: {
         noExternal: ['swiper']
       }

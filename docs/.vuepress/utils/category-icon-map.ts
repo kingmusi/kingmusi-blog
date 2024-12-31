@@ -1,6 +1,4 @@
-const icons = import.meta.globEager('../public/category-icon/*.svg')
-
-const getIcon = (key: string) => icons[`../public/category-icon/${key}.svg`].default
+const getIcon = (key: string) => `/category-icon/${key}.svg`
 const map = new Map([
   ['web', getIcon('web')],
   ['html', getIcon('html')],
@@ -23,8 +21,8 @@ const map = new Map([
   ['算法', getIcon('algorithm')],
   ['前端工程化', getIcon('webpack')],
   ['flutter', getIcon('flutter')],
-  ['数学', getIcon('math')],
-  ['游戏', getIcon('game')]
+  ['图形学', getIcon('graphics')],
+  ['游戏', getIcon('game')],
 ])
 
 export default map

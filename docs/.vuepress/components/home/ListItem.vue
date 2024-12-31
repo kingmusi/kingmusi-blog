@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<Params>(), {
   time: 0 // 修改时间
 })
 
-const img = `url(${iconMap.get(props.category)})`
+const img = `url('${iconMap.get(props.category)}')`
 
 const router = useRouter()
 const href = props.path.replace('.md', '.html')
@@ -152,7 +152,7 @@ const toArticle = () => {
     }
 
     &__category::before {
-      background-image: url('@/public/category.svg');
+      background-image: url('/category.svg');
     }
     &__category::after {
       content: ' - ';
@@ -160,11 +160,11 @@ const toArticle = () => {
     }
 
     &__subcatalog::before {
-      background-image: url('@/public/subcatalog.svg');
+      background-image: url('/subcatalog.svg');
     }
 
     &__time::before {
-      background-image: url('@/public/time.svg');
+      background-image: url('/time.svg');
     }
 
     div:last-child {

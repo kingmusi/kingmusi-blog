@@ -16,7 +16,6 @@ import iconMap from '@/utils/category-icon-map'
 
 const router = useRouter()
 
-// eslint-disable-next-line no-undef
 const categorys = __CATEGORYS__
 </script>
 
@@ -41,9 +40,9 @@ const categorys = __CATEGORYS__
     list-style-type: none;
 
     li {
-      border: 1px solid var(--c-border);
+      border: 3px solid var(--vp-c-border);
       border-radius: 4px;
-      background-color: var(--c-bg);
+      background-color: transparent;
       text-align: center;
       cursor: pointer;
       img {

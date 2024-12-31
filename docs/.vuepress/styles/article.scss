@@ -1,5 +1,6 @@
 h1 {
   text-align: center;
+  font-weight: 600;
 
   &::after {
     content: '';
@@ -14,9 +15,6 @@ h1 {
 h2 {
   position: relative;
   padding-left: 0.5em;
-  a.header-anchor {
-    margin-left: -1.37em;
-  }
   &::after {
     content: '';
     position: absolute;
@@ -46,6 +44,10 @@ h4::before {
   background-color: var(--main-4);
   vertical-align: middle;
 }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+}
 
 // 强调
 strong {
@@ -57,9 +59,9 @@ table {
   display: table;
   width: 100%;
 }
-th, td {
-  border-color: #dfe2e5;
-}
+// th, td {
+//   border-color: #dfe2e5;
+// }
 html.dark th,
 html.dark td {
   border-color: #595959;
@@ -69,6 +71,7 @@ html.dark td {
 blockquote {
   position: relative;
   padding-top: 1.3rem;
+  border-inline-start: .2rem solid var(--c-brand);
   &::before {
     content: '“';
     position: absolute;
@@ -84,4 +87,13 @@ blockquote {
 
 code {
   font-family: 'Fira Code', var(--font-family-code);
+}
+:not(pre) > code {
+  margin: 0 .3em;
+  color: var(--c-text-lighter);
+  background-color: var(--c-bg-lighter);
+}
+
+p, ul, ol {
+  line-height: 2;
 }

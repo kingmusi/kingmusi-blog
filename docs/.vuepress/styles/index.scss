@@ -1,11 +1,14 @@
-@import './font.scss';
-@import './article.scss';
+@use './font.scss';
+@use './article.scss';
 :root {
+  --vp-c-accent: var(--main-6);
   --c-brand: var(--main-6);
   --c-brand-light: var(--main-4);
   --c-border-dark: var(--main-6);
   --c-text-lighter: var(--main-5);
   --c-bg-lighter: var(--main-1);
+
+  --font-family-code: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 
       /* 主题色 */
   --main-1: #fff3f0;
@@ -20,10 +23,21 @@
   --main-10: #590009;
 }
 
-html.dark {
+[data-theme='dark'] {
+  --vp-c-accent: var(--main-3);
   --c-brand: var(--main-5);
   --c-brand-light: var(--main-5);
   --c-border-dark: var(--main-4);
-  --c-text-lighter: var(--main-5);
+  --c-text-lighter: var(--main-4);
   --c-bg-lighter: #ffb5b333;
+
+  --font-family-code: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+
+  p img {
+    background-color: #fff;
+  }
+
+  .vp-site-logo {
+    background-color: transparent;
+  }
 }

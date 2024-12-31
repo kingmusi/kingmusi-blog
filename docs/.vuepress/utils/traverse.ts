@@ -1,5 +1,5 @@
 // 根据文档生成 sidebar
-import { SidebarConfigArray } from '@vuepress/theme-default'
+import { SidebarArrayOptions } from '@vuepress/theme-default'
 import { HomeList, CategoryList } from '../types'
 
 import path from 'path'
@@ -15,7 +15,7 @@ function dirsort(a: string, b: string) {
 }
 
 export default function traverse() {
-  const sidebar: SidebarConfigArray = []
+  const sidebar: SidebarArrayOptions = []
   const list: HomeList = []
   const categorys: CategoryList = []
 
@@ -29,7 +29,7 @@ export default function traverse() {
     const sidebarObj = {
       text: category,
       collapsible: true, // 可折叠
-      children: [] as SidebarConfigArray
+      children: [] as SidebarArrayOptions
     }
 
     // 生成 category 数据
@@ -49,7 +49,7 @@ export default function traverse() {
       const sidebarObj2 = {
         text: subcatalog,
         collapsible: true,
-        children: [] as SidebarConfigArray
+        children: [] as SidebarArrayOptions
       }
 
       // 生成第二层 category markdown 数据
