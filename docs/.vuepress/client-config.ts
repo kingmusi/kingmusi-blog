@@ -6,11 +6,13 @@ import Layout from './components/Layout.vue'
 
 export default defineClientConfig({
   enhance({ app, router, siteData }) {
-    app.use(Particles, {
-      init: async engine => {
-        await loadSlim(engine);
-      },
-    })
+    if (!__VUEPRESS_SSR__) {
+      app.use(Particles, {
+        init: async engine => {
+          await loadSlim(engine);
+        },
+      })
+    }
   },
   setup() {
     onMounted(() => {
