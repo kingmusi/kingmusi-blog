@@ -18,7 +18,7 @@
    const store = createStore(rootReducer, applyMiddleware(thunk));
    ```
 
-3. 这时候==action就可以是一个函数==了，不用重新在外面定义一个拿到数据后在 `dispatch`，更有==整体性==
+3. 这时候 ==action就可以是一个函数== 了，不用重新在外面定义一个拿到数据后在 `dispatch`，更有 ==整体性== 
 
    - 这时候 dispatch 的参数为函数，会自动执行这个函数 
 

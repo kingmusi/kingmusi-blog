@@ -10,6 +10,9 @@ import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 import { markdownMathPlugin } from '@vuepress/plugin-markdown-math'
 import { photoSwipePlugin } from '@vuepress/plugin-photo-swipe'
 import { watermarkPlugin } from '@vuepress/plugin-watermark'
+import { markdownStylizePlugin } from '@vuepress/plugin-markdown-stylize'
+import { mediumZoomPlugin } from '@vuepress/plugin-medium-zoom'
+import { oml2dPlugin } from 'vuepress-plugin-oh-my-live2d'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -34,7 +37,22 @@ export default defineUserConfig({
     ['link', { rel: 'preconnect', href: 'https://www.googletagmanager.com' }], // googleAnalytics预连接
     ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }], // pwa
     ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }], // 百度收录验证
-    ['meta', { name: '360-site-verification', content: 'bbeb6891b4135a6e65877a7e7d4be2cd' }] // 360 收录验证
+    ['meta', { name: '360-site-verification', content: 'bbeb6891b4135a6e65877a7e7d4be2cd' }], // 360 收录验证
+    // markdownStylizePlugin scss中注入样式不生效，所以直接在style中注入
+    ['style', {}, `
+      mark {
+        padding: 2px 4px;
+        margin: 0 2px;
+        font-weight: 500;
+        color: #222222;
+        background-color: var(--main-4);
+        border-radius: 2px;
+        border-radius: 4px;
+      }
+      #oml2d-stage {
+        right: 75px !important;
+      }
+    `]
   ],
   theme: defaultTheme({
     logo: '/logo.svg', // 主题logo
@@ -53,9 +71,25 @@ export default defineUserConfig({
   }),
   shouldPrefetch: false,
   plugins: [
+    // 水印
     watermarkPlugin({}),
+    // 数学公式
     markdownMathPlugin({}),
-    photoSwipePlugin({}),
+    // 增强语法解析
+    markdownStylizePlugin({
+      // == == 标记
+      mark: true,
+      // 上下标
+      sup: true
+    }),
+    // 禁止默认图片放大插件
+    mediumZoomPlugin({
+      selector: '.medium-zoom'
+    }),
+    // 使用更好的图片预览插件
+    photoSwipePlugin({
+      download: false
+    }),
     // google 埋点
     googleAnalyticsPlugin({ id: 'G-40Q2D0LN9P' }),
     pwaPlugin({}),
@@ -63,6 +97,32 @@ export default defineUserConfig({
       apiKey: '4488710a3e7070c0782ffe7717b52799',
       indexName: 'kingmusi',
       appId: 'XNAMRA0CZ0'
+    }),
+    oml2dPlugin({
+      // 在这里配置选项
+      models: [
+        {
+          "path": "https://model.oml2d.com/cat-black/model.json",
+          "scale": 0.1,
+          "stageStyle": {
+            "height": 233
+          }
+        }
+      ],
+      dockedPosition: 'right',
+      primaryColor: '#ffd4cc',
+      statusBar: {
+        disable: true
+      },
+      tips: {
+        style: {
+          top: '-30%'
+        },
+        idleTips: {
+          wordTheDay: true
+        },
+        messageLine: 5
+      }
     })
   ],
   // 改造页面

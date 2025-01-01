@@ -234,7 +234,7 @@
 
    - 所以把子渲染程序用到的包（也可添加到 webpack.config.json，自动打包）
 
-   - 和把==除 react 中自己 npm 的，并且 window.require 引入==的包
+   - 和把 ==除 react 中自己 npm 的，并且 window.require 引入== 的包
    - 仍需留在`dependencies` 外。其他可全部移动到 `devDependencies` 中
    - ![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201220232618.png)
 

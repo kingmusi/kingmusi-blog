@@ -36,7 +36,7 @@ import 'swiper/css/autoplay'
 
 const bannerText = ['M', 'U', 'S', 'I']
 
-const bgColor = ['rgb(179, 189, 196)', 'rgb(180, 183, 166)', 'rgb(140, 152, 187)']
+const bgColor = ['rgb(179, 189, 196)', 'rgb(180, 183, 166)', 'rgb(140, 152, 187)', 'rgb(179, 189, 196)']
 const transitionStart = (swiper: any) => {
   const slides = swiper.slides
   const imgBox = slides[swiper.previousIndex].querySelector('.img-box') //图片包装器

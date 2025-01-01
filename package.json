@@ -16,6 +16,8 @@
     "@vuepress/plugin-docsearch": "^2.0.0-rc.68",
     "@vuepress/plugin-google-analytics": "^2.0.0-rc.66",
     "@vuepress/plugin-markdown-math": "^2.0.0-rc.68",
+    "@vuepress/plugin-markdown-stylize": "^2.0.0-rc.68",
+    "@vuepress/plugin-medium-zoom": "^2.0.0-rc.68",
     "@vuepress/plugin-photo-swipe": "^2.0.0-rc.68",
     "@vuepress/plugin-pwa": "^2.0.0-rc.68",
     "@vuepress/plugin-watermark": "^2.0.0-rc.68",
@@ -28,9 +30,13 @@
     "vuepress": "^2.0.0-rc.19"
   },
   "dependencies": {
+    "@tsparticles/slim": "^3.7.1",
+    "@tsparticles/vue3": "^3.0.1",
     "dayjs": "^1.11.13",
-    "particles.vue3": "^2.12.0",
+    "install": "^0.13.0",
+    "npm": "^10.9.2",
     "swiper": "^11.1.15",
-    "vue-window-size": "^2.0.0"
+    "vue-window-size": "^2.0.0",
+    "vuepress-plugin-oh-my-live2d": "^0.19.3"
   }
 }

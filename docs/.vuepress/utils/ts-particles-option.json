@@ -25,10 +25,10 @@
   },
   "particles": {
       "color": {
-          "value": "#000000"
+          "value": "#93b5cf"
       },
       "links": {
-          "color": "#000000",
+          "color": "#93b5cf",
           "distance": 150,
           "enable": true,
           "opacity": 0.4,

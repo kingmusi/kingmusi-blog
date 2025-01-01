@@ -8,8 +8,6 @@ declare global {
   }
   declare const __VUEPRESS_SSR__: boolean
 
-  declare module "particles.vue3"
-
   declare const __LIST__: HomeList
   declare const __CATEGORYS__: CategoryList
 }

@@ -1,10 +1,16 @@
 import { onMounted } from 'vue'
 import { defineClientConfig } from '@vuepress/client'
-import Particles from 'particles.vue3'
+import Particles from "@tsparticles/vue3"
+import { loadSlim } from '@tsparticles/slim'
+import Layout from './components/Layout.vue'
 
 export default defineClientConfig({
   enhance({ app, router, siteData }) {
-    app.use(Particles)
+    app.use(Particles, {
+      init: async engine => {
+        await loadSlim(engine);
+      },
+    })
   },
   setup() {
     onMounted(() => {
@@ -12,5 +18,8 @@ export default defineClientConfig({
         import('@/utils/click-fireworks.js' as any) // 鼠标点击烟花特效
       }
     })
+  },
+  layouts: {
+    Layout
   }
 })
