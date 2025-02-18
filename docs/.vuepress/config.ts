@@ -13,10 +13,12 @@ import { watermarkPlugin } from '@vuepress/plugin-watermark'
 import { markdownStylizePlugin } from '@vuepress/plugin-markdown-stylize'
 import { mediumZoomPlugin } from '@vuepress/plugin-medium-zoom'
 import { oml2dPlugin } from 'vuepress-plugin-oh-my-live2d'
+import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
 import traverse from './utils/traverse'
+import parseCode from './utils/parseCode'
 
 const { sidebar, list, categorys } = traverse()
 
@@ -123,7 +125,43 @@ export default defineUserConfig({
         },
         messageLine: 5
       }
-    })
+    }),
+    (app) => markdownContainerPlugin({
+      type: 'demo',
+      render(tokens, idx) {
+        if (tokens[idx].nesting === 1) {
+          const content: Record<string, string> = {}
+          const raw: Record<string, string> = {}
+
+          const fn = (code: string, type: string) => {
+            const enRaw = encodeURIComponent(app.markdown.render(`\`\`\`${type}\n${code}\`\`\``))
+            raw[type] = enRaw
+
+            const enContent = parseCode(code, type)
+            if (enContent) {
+              content[enContent.type] = enContent.code
+            }
+          }
+
+          const matchToken: typeof tokens = []
+          for (let i = idx; i < tokens.length; i++) {
+            const token = tokens[i]
+            if (token && token.type === 'fence' && token.tag === 'code') {
+              matchToken.push(token)
+            }
+            if (token && token.type === 'container_demo_close') {
+              break
+            }
+          }
+          for (const token of matchToken) {
+            fn(token.content, token.info)
+          }
+
+          return `<demo content="${encodeURIComponent(JSON.stringify(content))}" raw="${encodeURIComponent(JSON.stringify(raw))}">`;
+        }
+        return `</demo>`;
+      }
+    }),
   ],
   // 改造页面
   alias: {
