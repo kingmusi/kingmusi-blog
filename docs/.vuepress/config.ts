@@ -162,6 +162,38 @@ export default defineUserConfig({
         return `</demo>`;
       }
     }),
+    markdownContainerPlugin({
+      type: 'dom',
+      render(tokens, idx) {
+        if (tokens[idx].nesting === 1) {
+          const content: Record<string, string> = {}
+
+          const fn = (code: string, type: string) => {
+            const enContent = parseCode(code, type)
+            if (enContent) {
+              content[enContent.type] = enContent.code
+            }
+          }
+
+          const matchToken: typeof tokens = []
+          for (let i = idx; i < tokens.length; i++) {
+            const token = tokens[i]
+            if (token && token.type === 'fence' && token.tag === 'code') {
+              matchToken.push(token)
+            }
+            if (token && token.type === 'container_dom_close') {
+              break
+            }
+          }
+          for (const token of matchToken) {
+            fn(token.content, token.info)
+          }
+
+          return `<Dom content="${encodeURIComponent(JSON.stringify(content))}">`;
+        }
+        return `</Dom>`;
+      }
+    }),
   ],
   // 改造页面
   alias: {

@@ -4,9 +4,11 @@
 
 1. 常规流`块级元素认为浮动元素不存在`
 
+:::demo
+
 ```html
-<div class="block-red" />
-<div class="float-pink" />
+<div class="float-pink"></div>
+<div class="block-red"></div>
 ```
 
 ```css
@@ -23,11 +25,13 @@
 }
 ```
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201215162550.png)
+:::
 
 > 红色的块级元素没有受到粉色浮动元素的影响，还展示在左上角的位置，但是被粉色元素盖住了左边的部分
 
 2. 常规流`行内元素会被浮动元素影响`
+
+:::demo
 
 ```html
 <div>
@@ -45,7 +49,7 @@
 }
 ```
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201215164332.png)
+:::
 
 > 文字出现在浮动元素旁边时，会发生文字环绕的效果。 浮动元素会间接影响父级（块级元素）元素，如这里的body，因为浮动元素的占位导致多了一点宽度，使父级高度增加
 

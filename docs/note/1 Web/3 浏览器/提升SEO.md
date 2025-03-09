@@ -14,7 +14,42 @@
 </head>
 ```
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202202202013164.png)
+:::dom
+```html
+<div>
+  <code>
+    <span class="blue">&lt;title&gt;</span>京东（JD.COM）—正品低价、品质保障、配送及时、轻松购物！<span class="blue">&lt;/title&gt;</span>
+    <br />
+    <span class="blue">&lt;meta</span>
+    <span class="blue2">name</span><span class="blue">=</span><span class="blue2">"</span><span class="orange">description</span><span class="blue2">"</span>
+    <span class="blue2">content</span><span class="blue">=</span><span class="blue2">"</span><span class="orange">京东JD.COM—专业的综合网上购物商城，为您提供正品低价的购物选择、优质便捷的服务体验。商品来自全球数十万品牌商家，囊括家电、手机、电脑、服装、居家、母婴、美妆、个护、食品、生鲜等丰富品类，满足各种购物需求。</span><span class="blue2">"</span><span class="blue">&gt;</span>
+    <br />
+    <span class="blue">&lt;meta</span>
+    <span class="blue2">name</span><span class="blue">=</span><span class="blue2">"</span><span class="orange">keywords</span><span class="blue2">"</span>
+    <span class="blue2">content</span><span class="blue">=</span><span class="blue2">"</span><span class="orange">“网上购物，网上商城，家电，手机，电脑，服装，居家，母婴，美妆，个护，食品，生鲜，京东</span><span class="blue2">"</span><span class="blue">&gt;</span>
+  </code>
+</div>
+```
+```css
+div {
+  padding: 0.5rem;
+  background: #202126;
+}
+code {
+  font-size: 14px;
+  color: #aaabad;
+}
+.blue {
+  color: #5c829a;
+}
+.blue2 {
+  color: #91a4b8;
+}
+.orange {
+  color: #e9946b;
+}
+```
+:::
 
 > 1. `<title>`、`<meta description>` 和 `<meta` `keywords>` 三者的权重依次减小
 > 2. 不能大量堆砌关键字，搜索引擎可能会降低这个网站的排名甚至将其列入黑名单

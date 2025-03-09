@@ -17,23 +17,63 @@
 
 #### 矩形
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201214234543.png)
+:::demo
+
+```html
+<svg width="100" height="100">
+	<rect x="0" y="0" width="100" height="100" fill="#f06" />
+</svg>
+```
+
+:::
 
 #### 圆
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201214234628.png)
+:::demo
+
+```html
+<svg width="100" height="100">
+	<circle cx="50" cy="50" r="50" fill="#f06" />
+</svg>
+```
+
+:::
 
 #### 椭圆
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201214234654.png)
+:::demo
+
+```html
+<svg width="100" height="100">
+	<ellipse cx="50" cy="50" rx="50" ry="30" fill="#f06" />
+</svg>
+```
+
+:::
 
 #### 直线
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201214234722.png)
+:::demo
+
+```html
+<svg width="100" height="100">
+	<line x1="0" y1="100" x2="100" y2="0" stroke="#f06" />
+</svg>
+```
+
+:::
 
 #### 文本
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/20201214234831.png)
+:::demo
+
+```html
+<svg width="100" height="100">
+    <text x="0" y="50" stroke="#f06">kingmusi</text>
+</svg>
+```
+
+:::
 
 ## 与Canvas的区别
 

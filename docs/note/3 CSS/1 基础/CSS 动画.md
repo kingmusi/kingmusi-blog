@@ -12,13 +12,13 @@
 
 2. ·animation·
 
-| 名称 | 完成时间   | 速度曲线    | 延迟       | 播放次数             | 是否逆向 | 是否运动 | 完成后状态                 |
-| ---- | ---------- | ----------- | ---------- | -------------------- | -------- | -------- | -------------------------- |
-|      | 秒（s）    | linear      | 秒（s）    | n                    | normal   | running  | none                       |
-|      | 毫秒（ms） | ease        | 毫秒（ms） | infinite<br />无限次 | reverse  | paused   | forwards<br />保持最后一帧 |
-|      |            | ease-in     |            |                      |          |          |                            |
-|      |            | ease-out    |            |                      |          |          |                            |
-|      |            | ease-in-out |            |                      |          |          |                            |
+| 名称 | 完成时间   | 速度曲线    | 延迟       | 播放次数                                                     | 是否逆向 | 是否运动 | 完成后状态                 |
+| ---- | ---------- | ----------- | ---------- | ------------------------------------------------------------ | -------- | -------- | -------------------------- |
+|      | 秒（s）    | linear      | 秒（s）    | .left, .right{    float: left;    width: 150px;    height: 300px;    background: red;}.right{    float: right;}.main{    height:300px;    background: green;     overflow:hidden; /* bfc */}css | normal   | running  | none                       |
+|      | 毫秒（ms） | ease        | 毫秒（ms） | infinite<br />无限次                                         | reverse  | paused   | forwards<br />保持最后一帧 |
+|      |            | ease-in     |            |                                                              |          |          |                            |
+|      |            | ease-out    |            |                                                              |          |          |                            |
+|      |            | ease-in-out |            |                                                              |          |          |                            |
 
 ## transform
 

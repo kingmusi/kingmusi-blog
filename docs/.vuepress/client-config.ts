@@ -4,6 +4,7 @@ import Particles from "@tsparticles/vue3"
 import { loadSlim } from '@tsparticles/slim'
 import Layout from './components/Layout.vue'
 import Demo from './container/Demo.vue'
+import Dom from './container/Dom.vue'
 
 export default defineClientConfig({
   enhance({ app, router, siteData }) {
@@ -15,6 +16,7 @@ export default defineClientConfig({
       })
     }
     app.component('Demo', Demo)
+    app.component('Dom', Dom)
   },
   setup() {
     onMounted(() => {

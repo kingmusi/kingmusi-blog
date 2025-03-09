@@ -3,11 +3,23 @@
 ## 拖放元素
 
 - 默认情况下，图片、链接、选中文本是可拖动的
-- 可以让除上面三种元素外的元素可拖动，添加`draggable` 属性即可
+- 可以让除上面三种元素外的元素可拖动，添加`draggable` 属性，并且设置值为 `true`
 
+:::demo
 ```html
-<div draggable></div>
+<div draggable="true">拖拽我！！</div>
 ```
+```css
+div {
+	width: 100px;
+	line-height: 100px;
+	background: #e9ddb6;
+	color: #c02c38;
+	text-align: center;
+	border-radius: 8px;
+}
+```
+:::
 
 - 事件
 
