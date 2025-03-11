@@ -8,10 +8,8 @@ import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 import { markdownMathPlugin } from '@vuepress/plugin-markdown-math'
-import { photoSwipePlugin } from '@vuepress/plugin-photo-swipe'
 import { watermarkPlugin } from '@vuepress/plugin-watermark'
 import { markdownStylizePlugin } from '@vuepress/plugin-markdown-stylize'
-import { mediumZoomPlugin } from '@vuepress/plugin-medium-zoom'
 import { oml2dPlugin } from 'vuepress-plugin-oh-my-live2d'
 import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container'
 
@@ -83,14 +81,6 @@ export default defineUserConfig({
       mark: true,
       // 上下标
       sup: true
-    }),
-    // 禁止默认图片放大插件
-    mediumZoomPlugin({
-      selector: '.medium-zoom'
-    }),
-    // 使用更好的图片预览插件
-    photoSwipePlugin({
-      download: false
     }),
     // google 埋点
     googleAnalyticsPlugin({ id: 'G-40Q2D0LN9P' }),
@@ -226,8 +216,6 @@ export default defineUserConfig({
       }
     }
   },
-  // 客户端配置
-  clientConfigFile: vuepressPath.resolve(__dirname, 'client-config.ts'),
   // vite 配置
   bundler: viteBundler({
     viteOptions: {
@@ -239,6 +227,13 @@ export default defineUserConfig({
       },
       ssr: {
         noExternal: ['swiper']
+      }
+    },
+    vuePluginOptions: {
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag === 'json-viewer'
+        }
       }
     }
   })

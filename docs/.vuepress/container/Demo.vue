@@ -40,13 +40,7 @@ import { loadModule } from 'vue3-sfc-loader'
 import React from 'react'
 // @ts-ignore
 import { createRoot } from 'react-dom/client'
-import { applyPureReactInVue, setVeauryOptions } from 'veaury'
-
-setVeauryOptions({
-  react: {
-    createRoot
-  }
-})
+import * as veaury from 'veaury'
 
 const showCode = ref(false)
 const exampleRef = ref<HTMLDivElement | null>(null)
@@ -58,7 +52,6 @@ const props = defineProps<{
   content: string
   raw: string
 }>()
-
 // 解析 raw
 const raw = JSON.parse(decodeURIComponent(props.raw))
 for (const key in raw) {
@@ -102,7 +95,7 @@ if (some(['html', 'js', 'css'], (k) => has(content, k))) {
 
 if (has(content, 'vue')) {
   // @ts-ignore
-  loadModule('dynamic-component.vue', {
+  loadModule(Date.now() + 'dynamic-component.vue', {
     moduleCache: {
       vue: Vue
     },
@@ -118,6 +111,9 @@ if (has(content, 'vue')) {
         style.textContent = text
         document.head.appendChild(style)
       }
+    },
+    isCustomElement(tagName) {
+      return tagName === 'json-viewer'
     }
   }).then(res => {
     childComponent.value = res
@@ -127,6 +123,11 @@ if (has(content, 'vue')) {
 }
 
 if (has(content, 'react')) {
+  veaury.setVeauryOptions({
+    react: {
+      createRoot
+    }
+  })
   const func = new Function('React', 'exports', content.react)
   const exports = {
     default: null
@@ -134,7 +135,7 @@ if (has(content, 'react')) {
   func(React, exports)
   const component = exports.default
   if (component) {
-    childComponent.value = applyPureReactInVue(component)
+    childComponent.value = veaury.applyPureReactInVue(component)
   }
 }
 </script>

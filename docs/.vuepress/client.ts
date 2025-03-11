@@ -5,6 +5,7 @@ import { loadSlim } from '@tsparticles/slim'
 import Layout from './components/Layout.vue'
 import Demo from './container/Demo.vue'
 import Dom from './container/Dom.vue'
+import './plugins/JsonViewer'
 
 export default defineClientConfig({
   enhance({ app, router, siteData }) {
@@ -14,9 +15,9 @@ export default defineClientConfig({
           await loadSlim(engine);
         },
       })
+      app.component('Demo', Demo)
+      app.component('Dom', Dom)
     }
-    app.component('Demo', Demo)
-    app.component('Dom', Dom)
   },
   setup() {
     onMounted(() => {

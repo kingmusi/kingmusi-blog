@@ -4,12 +4,12 @@
 
 效果：父元素的高由子元素决定，且每个子元素的高都是相同的
 
-![](https://gitee.com/kingmusi/imgs/raw/master/blog/202110040009325.png)
-
 实现：
 
 1. 父为 **flex** 布局，无高度
 2. 子无高度
+
+:::demo
 
 ```html
 <div class="parent">
@@ -37,11 +37,17 @@
 }
 ```
 
+:::
+
 ##  左右布局
 
 效果：一行有两个子元素，分别在左边和右边，其中间的间距自动计算
 
 ![](https://gitee.com/kingmusi/imgs/raw/master/blog/202110040113839.png)
+
+#### 1、margin-left(right): auto
+
+:::demo
 
 ```html
 <div class="parent">
@@ -53,7 +59,7 @@
 ```css
 .parent {
     display: flex;
-    background: pink;
+    background: #ef475d;
 }
 .child {
     background: skyblue;
@@ -63,18 +69,31 @@
 }
 ```
 
-或
+:::
+
+#### 2、space-between
+
+:::demo
+
+```html
+<div class="parent">
+    <div>left</div>
+    <div>right</div>
+</div>
+```
 
 ```css
 .parent {
     display: flex;
     justify-content: space-between;
-    background: pink;
+    background: #ef475d;
 }
 .child {
     background: skyblue;
 }
 ```
+
+:::
 
 ## 两行 / 三行布局
 
@@ -88,23 +107,46 @@
 
 实现：假设页面有三层，分别为 `header` 、 `main` 、 `footer` ，则给 `main` 添加 `flex-grow: 1`，让其自动撑开
 
-```css
-header {
-	height: xx;
-}
-main {
-  flex-grow: 1;
-}
-footer {
-	height: xx
+:::demo
+
+```html
+<div>
+    <header>头部</header>
+    <main>中间</main>
+    <footer>底部</footer>
+</div>
+```
+
+```less
+div {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+
+    header {
+		height: 50px;
+        background-color: #b083c0;
+    }
+    main {
+      	flex-grow: 1;
+      	background-color: #877ebf;
+    }
+    footer {
+        height: 50px;
+        background-color: #5373bf;
+    }
 }
 ```
+
+:::
 
 ## 溢出布局
 
 效果：子元素超出父元素宽度
 
-![](https://gitee.com/kingmusi/imgs/raw/master/blog/202110040123615.png)
+通过子元素设置 `flex-shrink: 0` 实现
+
+:::demo
 
 ```html
 <div class="parent">
@@ -131,4 +173,8 @@ footer {
     background: skyblue;
 }
 ```
+
+:::
+
+
 

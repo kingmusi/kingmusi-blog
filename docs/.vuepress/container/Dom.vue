@@ -1,9 +1,14 @@
 <template>
-  <div class="my-dom">
+  <div class="my-dom" @click="handleCapture">
     <div class="example" ref="exampleRef">
       <component v-if="childComponent" :is="childComponent" />
     </div>
   </div>
+  <vue-easy-lightbox
+    :visible="visibleRef"
+    :imgs="imgsRef"
+    @hide="visibleRef = false"
+  />
 </template>
 
 <script setup lang="ts">
@@ -14,22 +19,43 @@ import { loadModule } from 'vue3-sfc-loader'
 import React from 'react'
 // @ts-ignore
 import { createRoot } from 'react-dom/client'
-import { applyPureReactInVue, setVeauryOptions } from 'veaury'
-
-setVeauryOptions({
-  react: {
-    createRoot
-  }
-})
+import * as veaury from 'veaury'
+import html2canvas from 'html2canvas'
+import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox'
 
 // 子组件
-const exampleRef = ref<HTMLDivElement | null>(null)
 const childComponent = shallowRef<any>(null)
+// 容器
+const exampleRef = ref<HTMLDivElement | null>(null)
+
+// 图片预览
+const {
+  show,
+  visibleRef, 
+  imgsRef
+} = useEasyLightbox({
+  imgs: ''
+})
+async function handleCapture() {
+  if (imgsRef.value) {
+    show()
+    return
+  }
+  const dom = exampleRef.value
+  if (dom) {
+    const canvas = await html2canvas(dom, {
+      useCORS: true,
+      backgroundColor: null,
+      scale: 2,
+    })
+    imgsRef.value = canvas.toDataURL('image/png', 1)
+    show()
+  }
+}
 
 const props = defineProps<{
   content: string
 }>()
-
 // 解析 content
 const content = JSON.parse(decodeURIComponent(props.content))
 for (const key in content) {
@@ -66,17 +92,15 @@ if (some(['html', 'js', 'css'], (k) => has(content, k))) {
 
 if (has(content, 'vue')) {
   // @ts-ignore
-  loadModule('dynamic-component.vue', {
+  loadModule(Date.now() + 'dynamic-component.vue', {
     moduleCache: {
       vue: Vue
     },
     async getFile(url) {
-      if (url === 'dynamic-component.vue') {
-        return content.vue
-      }
-      throw new Error('Not found')
+      return content.vue
     },
-    addStyle(text) {
+    addStyle(text, id) {
+      console.log(id)
       if (text) {
         const style = document.createElement('style')
         style.textContent = text
@@ -91,6 +115,11 @@ if (has(content, 'vue')) {
 }
 
 if (has(content, 'react')) {
+  veaury.setVeauryOptions({
+    react: {  
+      createRoot
+    }
+  })
   const func = new Function('React', 'exports', content.react)
   const exports = {
     default: null
@@ -98,21 +127,19 @@ if (has(content, 'react')) {
   func(React, exports)
   const component = exports.default
   if (component) {
-    childComponent.value = applyPureReactInVue(component)
+    childComponent.value = veaury.applyPureReactInVue(component)
   }
 }
 </script>
 
 <style scoped lang="scss">
 .my-dom {
-  width: fit-content;
+  width: 100%;
+  height: fit-content;
   margin: 0.5rem 0;
+  cursor: pointer;
   .example {
     width: fit-content;
-    padding: 0.5rem;
-    box-sizing: border-box;
-    border: 1px solid var(--vp-c-border);
-    border-radius: 8px 8px 0 0;
   }
 }
 </style>

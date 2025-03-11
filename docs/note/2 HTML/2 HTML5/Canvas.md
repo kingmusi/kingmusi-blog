@@ -752,17 +752,67 @@ ctx.fillText('hello world', 150, 150)
 
 ## 导出 Canvas
 
-- 将`canvas`的内容抽取成一张图片，`base64`编码格式
+将`canvas`的内容抽取成一张图片，`base64`编码格式
 
-  ```js
-  const base64 = canvas.toDataURL()
-  ```
+```js
+const base64 = canvas.toDataURL()
+```
+
+:::demo
+
+```html
+<canvas width="50" height="50" style="background-color: #ccc"></canvas>
+<json-viewer data="{}"></json-viewer>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.rect(12.5, 12.5, 25, 25)
+ctx.strokeStyle = '#f00'
+ctx.stroke()
+
+// 导出base64
+const base64 = canvas.toDataURL()
+
+// 显示在界面上
+const jsonViewer = document.querySelector('json-viewer')
+jsonViewer.setAttribute('data', jsonStringify({ base64 }))
+```
+
+:::
 
 ## 获取像素点信息
 
 ```js
 ctx.getImageData(起始点x, 起始点y, 宽, 高)
 ```
+
+:::demo
+
+```html
+<canvas width="10" height="10" style="background-color: #ccc"></canvas>
+<json-viewer data="{}"></json-viewer>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.rect(0, 0, 5, 5)
+ctx.fillStyle = '#f00'
+ctx.fill()
+
+// 导出imageData，是一个 rgba 组成的信息
+const imageData = ctx.getImageData(0, 0, 6, 6)
+
+// 显示在界面上
+const jsonViewer = document.querySelector('json-viewer')
+jsonViewer.setAttribute('data', jsonStringify({ imageData }))
+```
+
+:::
 
 ## 如何解决canvas高分屏模糊的问题
 

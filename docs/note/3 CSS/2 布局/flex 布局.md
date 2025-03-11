@@ -1,6 +1,6 @@
 ﻿# flex布局
 
-#### 容器属性：`flex-direction`、`flex-wrap`、`flex-flow`、`justify-content`、`align-items`、`align-content`
+## 容器属性
 
 1. `flex-direction`：决定主轴的方向
 
@@ -36,7 +36,7 @@
 
 6. `align-content`：定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
 
-#### 项目属性：`order`、`flex-grow`、`flex-shrink`、`flex-basis`、`flex`、`align-self`
+## 项目属性
 
 1. `order`：定义项目的排列顺序。数值越小，排列越靠前，默认为0。
 
