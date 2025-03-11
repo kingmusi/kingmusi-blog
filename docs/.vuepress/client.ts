@@ -5,16 +5,17 @@ import { loadSlim } from '@tsparticles/slim'
 import Layout from './components/Layout.vue'
 import Demo from './container/Demo.vue'
 import Dom from './container/Dom.vue'
-import './plugins/JsonViewer'
+// import './plugins/JsonViewer'
 
 export default defineClientConfig({
-  enhance({ app, router, siteData }) {
+  async enhance({ app, router, siteData }) {
     if (!__VUEPRESS_SSR__) {
       app.use(Particles, {
         init: async engine => {
           await loadSlim(engine);
         },
       })
+      await import('@/plugins/JsonViewer.jsx' as any)
       app.component('Demo', Demo)
       app.component('Dom', Dom)
     }

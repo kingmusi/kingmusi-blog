@@ -1,6 +1,6 @@
 import React from 'react';
 import JsonView from '@uiw/react-json-view';
-import { nordTheme } from '@uiw/react-json-view/nord';
+import * as nord from '@uiw/react-json-view/nord';
 import ReactDOM from 'react-dom/client';
 import {
   Typeson,
@@ -183,7 +183,7 @@ class ReactJsonViewer extends HTMLElement {
       value={this._data}
       displayObjectSize={false}
       style={{
-        ...nordTheme,
+        ...(nord.nordTheme),
         padding: '8px',
         borderRadius: '4px',
       }}

@@ -100,10 +100,7 @@ if (has(content, 'vue')) {
       vue: Vue
     },
     async getFile(url) {
-      if (url === 'dynamic-component.vue') {
-        return content.vue
-      }
-      throw new Error('Not found')
+      return content.vue
     },
     addStyle(text) {
       if (text) {
