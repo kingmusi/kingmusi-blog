@@ -2,7 +2,6 @@ import { defineUserConfig } from 'vuepress'
 import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
 
-import { path as vuepressPath } from '@vuepress/utils'
 import { createPage } from '@vuepress/core'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
@@ -12,6 +11,7 @@ import { watermarkPlugin } from '@vuepress/plugin-watermark'
 import { markdownStylizePlugin } from '@vuepress/plugin-markdown-stylize'
 import { oml2dPlugin } from 'vuepress-plugin-oh-my-live2d'
 import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container'
+import { mdEnhancePlugin } from "vuepress-plugin-md-enhance"
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -75,6 +75,10 @@ export default defineUserConfig({
     watermarkPlugin({}),
     // 数学公式
     markdownMathPlugin({}),
+    mdEnhancePlugin({
+      // 启用 mermaid
+      mermaid: true,
+    }),
     // 增强语法解析
     markdownStylizePlugin({
       // == == 标记

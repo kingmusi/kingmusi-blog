@@ -22,7 +22,8 @@ const map = new Map([
   ['前端工程化', getIcon('webpack')],
   ['flutter', getIcon('flutter')],
   ['图形学', getIcon('graphics')],
-  ['游戏', getIcon('game')],
+  // ['游戏', getIcon('game')],
+  ['ai', getIcon('ai')]
 ])
 
 export default map

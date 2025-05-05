@@ -30,14 +30,16 @@
     "@vuepress/plugin-pwa": "^2.0.0-rc.68",
     "@vuepress/plugin-watermark": "^2.0.0-rc.68",
     "@vuepress/theme-default": "^2.0.0-rc.68",
+    "vuepress-plugin-md-enhance": "^2.0.0-rc.85",
     "deasync": "^0.1.30",
     "less": "^4.2.2",
     "mathjax-full": "^3.2.2",
+    "mermaid": "^11.6.0",
     "n-readlines": "^1.0.1",
     "sass": "^1.85.0",
     "typescript": "^5.7.2",
     "vite-plugin-compression": "^0.5.1",
-    "vuepress": "^2.0.0-rc.19"
+    "vuepress": "^2.0.0-rc.22"
   },
   "dependencies": {
     "@tsparticles/slim": "^3.7.1",

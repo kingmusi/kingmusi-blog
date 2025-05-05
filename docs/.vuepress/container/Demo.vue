@@ -42,7 +42,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import * as veaury from 'veaury'
 
-const showCode = ref(false)
+const showCode = ref(true)
 const exampleRef = ref<HTMLDivElement | null>(null)
 
 // 子组件
