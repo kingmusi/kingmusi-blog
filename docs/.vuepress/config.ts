@@ -9,7 +9,6 @@ import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 import { markdownMathPlugin } from '@vuepress/plugin-markdown-math'
 import { watermarkPlugin } from '@vuepress/plugin-watermark'
 import { markdownStylizePlugin } from '@vuepress/plugin-markdown-stylize'
-import { oml2dPlugin } from 'vuepress-plugin-oh-my-live2d'
 import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container'
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance"
 
@@ -93,32 +92,6 @@ export default defineUserConfig({
       apiKey: '4488710a3e7070c0782ffe7717b52799',
       indexName: 'kingmusi',
       appId: 'XNAMRA0CZ0'
-    }),
-    oml2dPlugin({
-      // 在这里配置选项
-      models: [
-        {
-          "path": "https://model.oml2d.com/cat-black/model.json",
-          "scale": 0.1,
-          "stageStyle": {
-            "height": 233
-          }
-        }
-      ],
-      dockedPosition: 'right',
-      primaryColor: '#ffd4cc',
-      statusBar: {
-        disable: true
-      },
-      tips: {
-        style: {
-          top: '-30%'
-        },
-        idleTips: {
-          wordTheDay: true
-        },
-        messageLine: 5
-      }
     }),
     (app) => markdownContainerPlugin({
       type: 'demo',

@@ -19,7 +19,7 @@
           <h3>{{ bannerText[index] }}</h3>
         </div>
         <div class="img-box">
-          <img :src="`/banner/${index + 1}.webp`" style="transform: translateX(0)" />
+          <img :src="`/banner/${index + 1}.webp`" loading="lazy" style="transform: translateX(0)" />
         </div>
       </swiper-slide>
     </Swiper>
