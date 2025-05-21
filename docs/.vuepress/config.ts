@@ -77,6 +77,7 @@ export default defineUserConfig({
     mdEnhancePlugin({
       // 启用 mermaid
       mermaid: true,
+      markmap: true
     }),
     // 增强语法解析
     markdownStylizePlugin({
