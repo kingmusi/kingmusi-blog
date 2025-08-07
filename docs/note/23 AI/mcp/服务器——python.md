@@ -1,4 +1,4 @@
-# MCP服务器——python
+# 服务器——python
 
 ## 简介
 
@@ -56,6 +56,16 @@ new-item main.py
 ```
 
 :::
+
+#### `Inspector` 本地开发服务器
+
+```shell
+npx @modelcontextprotocol/inspector \
+  uv \
+  --directory path/to/server \
+  run \
+  package-name \
+```
 
 ##  `Server`
 

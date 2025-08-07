@@ -1,187 +1,407 @@
-# mask
+# CSS Mask
 
-> 本文学习自 [奇妙的 CSS MASK](https://juejin.cn/post/6846687594693001223)
+## 📋 介绍
 
-## 语法
+可以使用图像、渐变或SVG来**控制元素的可见性**。
 
-mask 可以接受颜色、渐变、`url()` 图片等类似 background 的参数
+**核心原理**：遮罩中的**透明部分**会让元素对应区域变得透明，**不透明部分**保持元素可见。
 
-**图片与 mask 生成的 transparent 的重叠部分，将会变得透明**
+:::dom
 
-> 和 mask 其他颜色无关，只需要关注透明部分
-
-## 渐变例子
-
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211752916.png)
-
+```html
+<div class="warpper">
+  <div class="item">
+    <div>不透明</div>
+    <img src="/banner/1.webp" />
+  </div>
+  <div class="item">
+    <div>透明度70%</div>
+    <img src="/banner/1.webp" />
+  </div>
+  <div class="item">
+    <div>透明度30%</div>
+    <img src="/banner/1.webp" />
+  </div>
+  <div class="item">
+    <div>完全透明</div>
+    <img src="/banner/1.webp" />
+  </div>
+</div>
+```
 ```css
-{
-    background-image: url('./test.png');
-    mask: linear-gradient(90deg, transparent, #fff);
+.warpper {
+  display: flex;
+  gap: 10px;
+}
+.item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+img {
+  width: 100%;
+}
+.item:nth-child(1) img {
+  mask: linear-gradient(to right, #fff 0, #fff 100%);
+  -webkit-mask: linear-gradient(to right, #fff 0, #fff 100%);
+}
+.item:nth-child(2) img {
+  mask: linear-gradient(to right, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 100%);
+  -webkit-mask: linear-gradient(to right, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 100%);
+}
+.item:nth-child(3) img {
+  mask: linear-gradient(to right, rgba(255, 255, 255, 0.3) 0, rgba(255, 255, 255, 0.3) 100%);
+  -webkit-mask: linear-gradient(to right, rgba(255, 255, 255, 0.3) 0, rgba(255, 255, 255, 0.3) 100%);
+}
+.item:nth-child(4) img {
+  mask: linear-gradient(to right, transparent 0, transparent 100%);
+  -webkit-mask: linear-gradient(to right, transparent 0, transparent 100%);
 }
 ```
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211752935.png)
+:::
 
-## 切角例子
+特点：
+
+- **非破坏性**：不会改变原始元素的结构和内容
+- **灵活性强**：支持图片、渐变、SVG等多种遮罩源
+- **动画友好**：可以轻松实现动态遮罩效果
+- **性能优良**：GPU加速，渲染效率高
+
+## 🔧 基础属性解析
+
+#### mask-image
+定义遮罩图像源
+```css
+mask-image: none | <image> | <mask-source>
+```
+
+1. 图片
 
 ```css
-{
-    background-image: url('./test.webp');
-    mask: 
-        linear-gradient(135deg, transparent 30px, #fff 0)
-        top left,
-        linear-gradient(-135deg, transparent 30px, #fff 0)
-        top right,
-        linear-gradient(-45deg, transparent 30px, #fff 0)
-        bottom right,
-        linear-gradient(45deg, transparent 30px, #fff 0)
-        bottom left;
+mask: url(mask.png);            /* 使用位图来做遮罩 */
+mask: url(masks.svg#star);      /* 使用 SVG 图形中的形状来做遮罩 */
+```
+
+:::demo
+```html
+<div>
+  <img src="/category-icon/css.svg" />
+  <svg>
+    <defs>
+      <mask id="mask-221e4e9a-225f-4771-bdcc-f8be456db11c">
+          <path fill="white" d="M 10,30
+          A 20,20 0,0,1 50,30
+          A 20,20 0,0,1 90,30
+          Q 90,60 50,90
+          Q 10,60 10,30 z">
+          </path>
+      </mask>
+    </defs>
+  </svg>
+</div>
+```
+
+```css
+div {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+}
+img {
+  width: 100px;
+  height: 100px;
+  mask: url(#mask-221e4e9a-225f-4771-bdcc-f8be456db11c);
+  -webkit-mask: url(#mask-221e4e9a-225f-4771-bdcc-f8be456db11c);
+}
+svg {
+  width: 0;
+  height: 0;
+}
+:::
+
+2. 渐变
+```css
+mask: linear-gradient(#000, transparent);
+```
+
+#### mask-position
+
+定义遮罩位置
+```css
+mask-position: top|bottom|left|right|center|percentage
+```
+
+#### mask-size
+定义遮罩尺寸
+```css
+mask-size: <bg-size>
+```
+
+#### mask-repeat
+定义遮罩重复方式
+```css
+mask-repeat: <repeat-style>
+```
+
+- repeat: 默认值，遮罩会在图片区域重复绘制
+- space: 遮罩尽可能多的平铺，且遮罩之间产生间距，遮罩图片不会被裁剪
+- round: 遮罩会压缩或者拉伸占满整个图片
+- no-repeat: 遮罩不会重复
+
+> 当 size 小于容器大小，并且不重复时，其他区域会直接不显示
+> :::demo
+> ```html
+> <div></div>
+> ```
+> ```css
+> div {
+>   width: 100px;
+>   height: 100px;
+>   background: pink;
+>   mask: linear-gradient(to right, #fff 0, #fff 100%) center no-repeat;
+>   mask-position: right bottom;
+>   mask-size: 50px 50px;
+>   -webkit-mask: linear-gradient(to right, #fff 0, #fff 100%) center no-repeat;
+>   -webkit-mask-position: right bottom;
+>   -webkit-mask-size: 50px 50px;
+> }
+> ```
+> :::
+
+#### mask-clip
+定义mask-image作用的图片区域
+```css
+mask-clip: content-box|padding-box|border-box|margin-box|fill-box|stroke-box|view-box|no-clip
+```
+
+## 🎨 mask-composite
+
+`mask-composite` 属性定义了**多个遮罩层之间的合成方式**，类似于Photoshop中的图层混合模式。
+
+### 支持的合成操作符
+
+#### add（添加）
+- **效果**：将多个遮罩层**相加**
+- **公式**：A + B
+- **适用场景**：需要扩大遮罩范围时
+
+:::demo
+```html
+<div></div>
+```
+```css
+div {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: pink;
+  mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  mask-size: 50px 50px;
+  mask-repeat: no-repeat;
+  mask-position: top left, center center;
+  mask-composite: add;
+  -webkit-mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  -webkit-mask-size: 50px 50px;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: top left, center center;
+  -webkit-mask-composite: source-over;
+}
+```
+:::
+
+#### subtract（减去）
+- **效果**：从第一个遮罩中**减去**后续遮罩
+- **公式**：A - B
+- **适用场景**：在遮罩中挖洞或创建缺口
+
+:::demo
+```html
+<div></div>
+```
+```css
+div {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: pink;
+  mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  mask-size: 50px 50px;
+  mask-repeat: no-repeat;
+  mask-position: top left, center center;
+  mask-composite: add;
+  -webkit-mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  -webkit-mask-size: 50px 50px;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: top left, center center;
+  -webkit-mask-composite: source-out;
+}
+```
+:::
+
+#### intersect（交集）
+- **效果**：只保留**重叠部分**
+- **公式**：A ∩ B
+- **适用场景**：创建精确的遮罩区域
+
+:::demo
+```html
+<div></div>
+```
+```css
+div {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: pink;
+  mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  mask-size: 50px 50px;
+  mask-repeat: no-repeat;
+  mask-position: top left, center center;
+  mask-composite: add;
+  -webkit-mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  -webkit-mask-size: 50px 50px;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: top left, center center;
+  -webkit-mask-composite: source-in;
+}
+```
+:::
+
+#### exclude（排除）
+- **效果**：保留**非重叠部分**
+- **公式**：A ∪ B - (A ∩ B)
+- **适用场景**：创建环形或复杂形状
+
+:::demo
+```html
+<div></div>
+```
+```css
+div {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: pink;
+  mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  mask-size: 50px 50px;
+  mask-repeat: no-repeat;
+  mask-position: top left, center center;
+  mask-composite: add;
+  -webkit-mask: linear-gradient(to right, #fff 0, #fff 100%), linear-gradient(to right, #fff 0, #fff 100%);
+  -webkit-mask-size: 50px 50px;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: top left, center center;
+  -webkit-mask-composite: xor;
+}
+```
+:::
+
+> `-webkit-mask-composite` 会有不同的值
+>
+> ```css
+> -webkit-mask-composite: clear; /*清除，不显示任何遮罩*/
+> -webkit-mask-composite: copy; /*只显示上方遮罩，不显示下方遮罩*/
+> -webkit-mask-composite: source-over; 
+> -webkit-mask-composite: source-in; /*只显示重合的地方*/
+> -webkit-mask-composite: source-out; /*只显示上方遮罩，重合的地方不显示*/
+> -webkit-mask-composite: source-atop;
+> -webkit-mask-composite: destination-over;
+> -webkit-mask-composite: destination-in; /*只显示重合的地方*/
+> -webkit-mask-composite: destination-out;/*只显示下方遮罩，重合的地方不显示*/
+> -webkit-mask-composite: destination-atop;
+> -webkit-mask-composite: xor; /*只显示不重合的地方*/
+> ```
+
+## 💡 实用实践例子
+
+### 1. 渐变边框效果 ✨
+
+这是最经典的mask应用之一，可以创建**渐变色的边框**效果。
+
+:::demo
+
+```html
+<div></div>
+```
+
+```css
+div {
+  width: 200px;
+  height: 100px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); /** 边框渐变 **/
+  border-radius: 10px;
+  padding: 1px; /** 边框宽度 **/
+  mask: linear-gradient(#fff 0 100%) content-box, linear-gradient(#fff 0 100%);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 100%) content-box, linear-gradient(#fff 0 100%);
+  -webkit-mask-composite: xor;
+}
+```
+
+:::
+
+**原理说明**：
+1. 元素使用**渐变背景**作为边框颜色
+2. 创建两层mask，一层在 `content-box` ，一层默认
+3. 通过 `mask-composite: subtract` 让内层"挖空"外层，形成边框效果
+
+### 2. 切角效果 🔲
+
+使用多个线性渐变创建切角效果：
+
+:::demo
+
+```html
+<div></div>
+```
+
+```css
+div {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+    mask: linear-gradient(135deg, transparent 30px, #fff 0) top left,
+    linear-gradient(-135deg, transparent 30px, #fff 0) top right,
+    linear-gradient(-45deg, transparent 30px, #fff 0) bottom right,
+    linear-gradient(45deg, transparent 30px, #fff 0) bottom left;
     mask-size: 50% 50%;
     mask-repeat: no-repeat;
 }
 ```
 
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211756767.png)
+:::
 
-## 两张重叠图片
+### 3. 图片转场动画 🎬
 
-两张图片，一张完全重叠在另外一张之上
-
-```js
-div {
-	position: relative;
-	background-image: url('./test.webp');
-}
-
-div::before {
-	content: "";
-	position: absolute;
-	top: 0;left: 0; right: 0;bottom: 0;
-	background-image: url('./test2.webp');
-	-webkit-mask: linear-gradient(45deg, #000 50%, transparent 50%);
-}
-```
-
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211808493.png)
-
-上面使用的 mask 的渐变，是完全的实色变化，没有过度效果，稍微修改一下 mask 内的渐变
-
-```diff
-- mask: linear-gradient(45deg, #000 50%, transparent 50%)
-+ mask: linear-gradient(45deg, #000 40%, transparent 60%)
-```
-
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211809540.png)
-
-## 使用 MASK 进行转场动画
-
-通过动态的去改变 mask 的值来实现图片的显示/转场效果
-
-```css
-div {
-    background: url(image1.jpg);
-    animation: maskMove 2s linear;
-}
-
-@keyframes maskMove {
-    0% {
-      mask: linear-gradient(45deg, #000 0%, transparent 5%, transparent 5%);
-    }
-    1% {
-      mask: linear-gradient(45deg, #000 1%, transparent 6%, transparent 6%);
-    }
-    ...
-    100% {
-      mask: linear-gradient(45deg, #000 100%, transparent 105%, transparent 105%);
-    }
-}
-```
-
-当然直接写会很费力，可以借助 SASS/LESS 等预处理器进行操作
-
-```scss
-@keyframes maskRotate {
-    @for $i from 0 through 100 { 
-        #{$i}% {
-            mask: linear-gradient(45deg, #000 #{$i + '%'}, transparent #{$i + 5 + '%'}, transparent 1%);
-        }
-    }
-}
-```
-
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211817123.gif)
-
-当然也可以使用角向渐变 `mask: conic-gradient()` 进行切换
-
-```scss
-@keyframes maskRotate {
-    @for $i from 0 through 100 { 
-        #{$i}% {
-            mask: conic-gradient(#000 #{$i - 10 + '%'}, transparent #{$i + '%'}, transparent);
-        }
-    }
-}
-```
-
-
-
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211819216.gif)
-
-## mask 与图片
-
-mask 属性传入的图片，并且遵循 background-image 与 mask 图片的透明重叠部分，将会变得透明
-
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211837702.gif)
-
-此例子主要用到这样一张图片
-
-![](https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211833921.png)
-
-然后，使用了逐帧动画，快速切换每一帧的 mask 
-
-```css
-.wrapper {
-	position: relative;
-	width: 384px;
-	height: 216px;
-}
-
-.img1 {
-	position: absolute;
-	top: 0;left: 0; right: 0;bottom: 0;
-	background-image: url('./test.webp');
-	background-size:  cover;
-}
-
-.img2 {
-	position: absolute;
-	top: 0;left: 0; right: 0;bottom: 0;
-	-mask: url(https://cdn.jsdelivr.net/gh/kingmusi/blogImages/img/202208211833921.png);
-    mask-size: 3000% 100%;
-    animation: maskMove 2s steps(29) infinite;
-}
-
-.img2::before {
-	content: "";
-	position: absolute;
-	top: 0;left: 0; right: 0;bottom: 0;
-	background-image: url('./test2.webp');
-	background-size:  cover;
-}
-
-@keyframes maskMove {
-    from {
-        mask-position: 0 0;
-    }
-    to {
-        mask-position: 100% 0;
-    }
-}
-```
+:::demo
 
 ```html
-<div class="wrapper">
-	<div class="img1"></div>
-	<div class="img2"></div>
-</div>
+<div></div>
+```
+
+```less
+.keyframe-loop(@i) when (@i <= 100) {
+  @percentage: @i * 1%;
+  @{percentage} {
+    mask: linear-gradient(45deg, #000 0%, transparent @percentage);
+  }
+  .keyframe-loop(@i + 1);
+}
+
+@keyframes maskTransition {
+  .keyframe-loop(0); // 从0开始循环
+}
+
+div {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+  animation: maskTransition 2s ease-in-out infinite;
+}
+```
+
+:::

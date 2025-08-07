@@ -1,4 +1,4 @@
-# MCP服务器——python
+# 服务器——ts
 
 ## 简介
 
@@ -93,6 +93,18 @@ new-item src\index.ts
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
+```
+
+#### 代码写完后打包
+
+```shell
+npm run build
+```
+
+#### `Inspector` 本地开发服务器
+
+```shell
+npx @modelcontextprotocol/inspector node build/index.js
 ```
 
 ##  `Server`
@@ -222,30 +234,30 @@ server.resource(
 >
 > ```ts
 > const server = new McpServer({
->   name: 'weather',
->   version: '1.0.0',
->   capabilities: {
->     resources: {
->       'file:///assets/citycode_areacode.json': {
->         name: '城市编码和区域编码映射表',
->         description: '可以获取城市区域的中文名，所属于的城市编码和区域编码',
->         mimeType: 'application/json',
->         get: async () => {
->           const citycodeMap = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'src/assets/citycode_areacode.json'), 'utf-8'))
->           return {
->             contents: [
->               {
->                 uri: 'file:///assets/citycode_areacode.json',
->                 mimeType: 'application/json',
->                 text: JSON.stringify(citycodeMap)
->               }
->             ]
->           }
->         }
->       }
->     },
->     tools: {}
->   }
+> name: 'weather',
+> version: '1.0.0',
+> capabilities: {
+>  resources: {
+>    'file:///assets/citycode_areacode.json': {
+>      name: '城市编码和区域编码映射表',
+>      description: '可以获取城市区域的中文名，所属于的城市编码和区域编码',
+>      mimeType: 'application/json',
+>      get: async () => {
+>        const citycodeMap = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'src/assets/citycode_areacode.json'), 'utf-8'))
+>        return {
+>          contents: [
+>            {
+>              uri: 'file:///assets/citycode_areacode.json',
+>              mimeType: 'application/json',
+>              text: JSON.stringify(citycodeMap)
+>            }
+>          ]
+>        }
+>      }
+>    }
+>  },
+>  tools: {}
+> }
 > })
 > ```
 
