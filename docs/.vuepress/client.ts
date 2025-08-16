@@ -10,14 +10,15 @@ import Dom from './container/Dom.vue'
 export default defineClientConfig({
   async enhance({ app, router, siteData }) {
     if (!__VUEPRESS_SSR__) {
+      await import('@/plugins/JsonViewer.jsx' as any)
+      app.component('Demo', Demo)
+      app.component('Dom', Dom)
+
       app.use(Particles, {
         init: async engine => {
           await loadSlim(engine);
         },
       })
-      await import('@/plugins/JsonViewer.jsx' as any)
-      app.component('Demo', Demo)
-      app.component('Dom', Dom)
     }
   },
   setup() {

@@ -33,14 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import * as Vue from 'vue'
-import { onMounted, ref, shallowRef } from 'vue'
-import { some, has } from 'lodash-es'
-import { loadModule } from 'vue3-sfc-loader'
-import React from 'react'
-// @ts-ignore
-import { createRoot } from 'react-dom/client'
-import * as veaury from 'veaury'
+import { onMounted, ref, shallowRef, h } from 'vue'
 
 const showCode = ref(true)
 const exampleRef = ref<HTMLDivElement | null>(null)
@@ -61,11 +54,13 @@ const activeRaw = ref(Object.keys(raw)[0])
 
 // 解析 content
 const content = JSON.parse(decodeURIComponent(props.content))
+const contentKeys = new Set<string>()
 for (const key in content) {
   content[key] = decodeURIComponent(content[key])
+  contentKeys.add(key)
 }
 
-if (some(['html', 'js', 'css'], (k) => has(content, k))) {
+if (['html', 'css', 'js'].some(v => contentKeys.has(v))) {
   onMounted(() => {
     const container = exampleRef.value
     if (container) {
@@ -93,47 +88,75 @@ if (some(['html', 'js', 'css'], (k) => has(content, k))) {
   })
 }
 
-if (has(content, 'vue')) {
-  // @ts-ignore
-  loadModule(Date.now() + 'dynamic-component.vue', {
-    moduleCache: {
-      vue: Vue
-    },
-    async getFile(url) {
-      return content.vue
-    },
-    addStyle(text) {
-      if (text) {
-        const style = document.createElement('style')
-        style.textContent = text
-        document.head.appendChild(style)
-      }
-    },
-    isCustomElement(tagName) {
-      return tagName === 'json-viewer'
+if (contentKeys.has('vue')) {
+  Promise.allSettled([import('vue3-sfc-loader'), import('vue')]).then(([sfcLoaderRes, VueRes]) => {
+    if (sfcLoaderRes.status === 'fulfilled' && VueRes.status === 'fulfilled') {
+      const sfcLoader = sfcLoaderRes.value
+      const Vue = VueRes.value
+      // @ts-ignore
+      sfcLoader.loadModule(Date.now() + 'dynamic-component.vue', {
+        moduleCache: {
+          vue: Vue
+        },
+        async getFile(url) {
+          return content.vue
+        },
+        addStyle(text) {
+          if (text) {
+            const style = document.createElement('style')
+            style.textContent = text
+            document.head.appendChild(style)
+          }
+        },
+        isCustomElement(tagName) {
+          return tagName === 'json-viewer'
+        }
+      }).then(res => {
+        childComponent.value = res
+      }).catch(e => {
+        childComponent.value = () => h('div', '加载组件失败，请刷新重试')
+        console.error(e)
+      })
+    } else {
+      childComponent.value = () => h('div', '加载组件失败，请刷新重试')
+      console.error('加载 Vue3 SFC Loader 或 Vue 失败', sfcLoaderRes, VueRes)
     }
-  }).then(res => {
-    childComponent.value = res
-  }).catch(e => {
-    console.error(e)
   })
 }
 
-if (has(content, 'react')) {
-  veaury.setVeauryOptions({
-    react: {
-      createRoot
+if (contentKeys.has('react')) {
+  Promise.allSettled([
+    import('react'),
+    // @ts-ignore
+    import('react-dom/client'),
+    import('veaury')
+  ]).then(([reactRes, reactDomClientRes, veauryRes]) => {
+    if (reactRes.status === 'fulfilled' && reactDomClientRes.status === 'fulfilled' && veauryRes.status === 'fulfilled') {
+      const React = reactRes.value
+      const { createRoot } = reactDomClientRes.value
+      const veaury = veauryRes.value
+      veaury.setVeauryOptions({
+        react: {  
+          createRoot
+        }
+      })
+      const func = new Function('React', 'exports', content.react)
+      const exports = {
+        default: null
+      }
+      func(React, exports)
+      const component = exports.default
+      if (component) {
+        childComponent.value = veaury.applyPureReactInVue(component)
+      } else {
+        childComponent.value = () => h('div', '加载组件失败，请刷新重试')
+        console.error('React 组件未导出或导出不正确')
+      }
+    } else {
+      childComponent.value = () => h('div', '加载组件失败，请刷新重试')
+      console.error('加载 React 或 React DOM Client 或 Veaury 失败', reactRes, reactDomClientRes, veauryRes)
     }
   })
-  const func = new Function('React', 'exports', content.react)
-  const exports = {
-    default: null
-  }
-  func(React, exports)
-  const component = exports.default
-  if (component) {
-    childComponent.value = veaury.applyPureReactInVue(component)
-  }
 }
 </script>
 

@@ -1,6 +1,7 @@
 import { defineUserConfig } from 'vuepress'
 import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 import { createPage } from '@vuepress/core'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
@@ -10,7 +11,7 @@ import { markdownMathPlugin } from '@vuepress/plugin-markdown-math'
 import { watermarkPlugin } from '@vuepress/plugin-watermark'
 import { markdownStylizePlugin } from '@vuepress/plugin-markdown-stylize'
 import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container'
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance"
+import { markdownChartPlugin } from '@vuepress/plugin-markdown-chart'
 
 import path from 'path'
 import viteCompression from 'vite-plugin-compression'
@@ -74,7 +75,7 @@ export default defineUserConfig({
     watermarkPlugin({}),
     // 数学公式
     markdownMathPlugin({}),
-    mdEnhancePlugin({
+    markdownChartPlugin({
       // 启用 mermaid
       mermaid: true,
       markmap: true
@@ -197,7 +198,10 @@ export default defineUserConfig({
   // vite 配置
   bundler: viteBundler({
     viteOptions: {
-      plugins: [viteCompression()],
+      plugins: [
+        viteCompression(),
+        visualizer()
+      ],
       resolve: {
         alias: {
           '@': path.resolve(__dirname)
