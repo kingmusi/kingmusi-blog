@@ -1,7 +1,5 @@
 import { onMounted } from 'vue'
 import { defineClientConfig } from '@vuepress/client'
-import Particles from "@tsparticles/vue3"
-import { loadSlim } from '@tsparticles/slim'
 import Layout from './components/Layout.vue'
 import Demo from './container/Demo.vue'
 import Dom from './container/Dom.vue'
@@ -13,12 +11,6 @@ export default defineClientConfig({
       await import('@/plugins/JsonViewer.jsx' as any)
       app.component('Demo', Demo)
       app.component('Dom', Dom)
-
-      app.use(Particles, {
-        init: async engine => {
-          await loadSlim(engine);
-        },
-      })
     }
   },
   setup() {

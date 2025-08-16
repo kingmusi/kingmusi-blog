@@ -101,11 +101,9 @@ const toArticle = () => {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: #fff;
 
     h3 {
       margin: 0;
-      color: var(--main-1);
       font-size: 1.5rem;
       font-weight: bold;
       text-overflow: ellipsis;

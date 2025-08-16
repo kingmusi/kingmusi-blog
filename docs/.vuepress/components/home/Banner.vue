@@ -22,6 +22,13 @@ const bgColor = ['rgb(179, 189, 196)', 'rgb(180, 183, 166)', 'rgb(140, 152, 187)
 
 let swiper: SwiperInstance | null = null
 const containerRef = ref<HTMLDivElement | null>(null)
+
+function resize() {
+  if (swiper) {
+    swiper.updateSize()
+  }
+}
+
 onMounted(async () => {
   const container = containerRef.value
   if (!container) return
@@ -78,12 +85,15 @@ onMounted(async () => {
       h3.style.transition = 'color 1s'
       h3.style.color = 'rgba(255,255,255,1)'
     })
+
+    window.addEventListener('resize', resize)
   }
 })
 onBeforeUnmount(() => {
   if (swiper) {
     swiper.destroy()
     swiper = null
+    window.removeEventListener('resize', resize)
   }
 })
 </script>
