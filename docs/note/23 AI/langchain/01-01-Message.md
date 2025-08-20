@@ -28,6 +28,7 @@ from langchain_core.messages import BaseMessage
 from langchain_core.messages import HumanMessage
 
 msg = HumanMessage(content="你好，LangChain！")
+print(msg)
 ```
 
 ## [AIMessage 🤖](https://python.langchain.com/api_reference/core/messages/langchain_core.messages.ai.AIMessage.html)

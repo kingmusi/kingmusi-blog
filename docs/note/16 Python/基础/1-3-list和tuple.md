@@ -48,9 +48,12 @@ del list[index]
 >
 > - 单个值的元组必须包含逗号，不包含会认为是一个优先级运算符
 >
+>   :::demo
 >   ```python
->   type((1)) # int
+>   print(type((1))) # int
+>   print(type((1,))) # tuple
 >   ```
+>   :::
 
 ## 列表和元组的区别
 

@@ -7,7 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, shallowRef, h } from 'vue'
+import { loadLink, loadScript } from '@/utils/loadScript';
+import { onMounted, ref, shallowRef, h, onBeforeUnmount } from 'vue'
 
 // 子组件
 const childComponent = shallowRef<any>(null)
@@ -16,7 +17,17 @@ const exampleRef = ref<HTMLDivElement | null>(null)
 
 const props = defineProps<{
   content: string
+  info?: string
 }>()
+
+// 解析 info
+const info: string[] = []
+if (props.info) {
+  const res = JSON.parse(decodeURIComponent(props.info))
+  if (Array.isArray(res)) {
+    info.push(...res)
+  }
+}
 // 解析 content
 const content = JSON.parse(decodeURIComponent(props.content))
 const contentKeys = new Set<string>()
@@ -121,6 +132,72 @@ if (contentKeys.has('react')) {
       childComponent.value = () => h('div', '加载组件失败，请刷新重试')
       console.error('加载 React 或 React DOM Client 或 Veaury 失败', reactRes, reactDomClientRes, veauryRes)
     }
+  })
+}
+
+if (contentKeys.has('python')) {
+  loadScript('https://pyscript.net/releases/2025.8.1/core.js')
+  loadLink('https://pyscript.net/releases/2025.8.1/core.css')
+
+  const attributes: Record<string, string> = {}
+  for (const s of info) {
+    const [key, value] = s.split('=')
+    if (key && value) {
+      attributes[key] = value
+    }
+  }
+  const script = document.createElement('script')
+  script.type = 'py-editor'
+  script.textContent = content.python
+  for (const key in attributes) {
+    script.setAttribute(key, attributes[key])
+  }
+  let observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === 'childList' && mutation.addedNodes.length) {
+        for (const node of Array.from(mutation.addedNodes)) {
+          const n = node as HTMLElement
+          if (n.tagName === 'PY-EDITOR') {
+            const editor = n.querySelector('.py-editor-input') as HTMLDivElement
+            const shadowRoot = editor.lastElementChild?.shadowRoot
+            if (shadowRoot) {
+              const style = shadowRoot.querySelector('style')
+              if (style) {
+                style.textContent = `${style.textContent}
+.cm-line {
+  color: #4b2e2b;
+}
+.ͼd[class] {
+  color: #41ae3c;
+}
+.ͼc[class] {
+  color: #0eb0c9;
+}
+.ͼm[class] {
+  color: #b89485;
+}
+`
+
+              }
+            }
+          }
+        }
+        observer.disconnect()
+      }
+    }
+  })
+  onMounted(() => {
+    exampleRef.value?.appendChild(script)
+    if (exampleRef.value) {
+      exampleRef.value.style.color = '#000'
+    }
+    observer.observe(exampleRef.value!, {
+      childList: true,
+    })
+  })
+  onBeforeUnmount(() => {
+    exampleRef.value?.removeChild(script)
+    observer?.disconnect?.()
   })
 }
 </script>

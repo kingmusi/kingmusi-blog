@@ -12,6 +12,7 @@
 - **适用场景**：只需要原始文本，不做进一步结构化处理时。
 - **示例代码**：
 
+  :::demo config={"packages":["langchain_core"]}
   ```python
   from langchain_core.output_parsers import StrOutputParser
   from langchain_core.messages import AIMessage
@@ -22,6 +23,7 @@
   result = parser.invoke(message) # 直接获取内容
   print(result)  # 输出: Hello, world!
   ```
+  :::
 
 ### 2️⃣ CommaSeparatedListOutputParser
 
@@ -29,6 +31,7 @@
 - **适用场景**：让 LLM 输出一组项目时（如关键词、标签等）。
 - **示例代码**：
 
+  :::demo config={"packages":["langchain_core"]}
   ```python
   from langchain_core.output_parsers import CommaSeparatedListOutputParser
   from langchain_core.messages import AIMessage
@@ -39,6 +42,7 @@
   result = parser.invoke(message)
   print(result)  # 输出: ['苹果', '香蕉', '橙子']
   ```
+  :::
   
   > **注意**：确保 LLM 输出的格式与预期一致，否则解析可能失败。
 
@@ -48,6 +52,7 @@
 - **适用场景**：需要 LLM 输出结构化 JSON 数据时。
 - **示例代码**：
 
+  :::demo config={"packages":["langchain_core"]}
   ```python
   from langchain_core.output_parsers import JsonOutputParser
   from langchain_core.messages import AIMessage
@@ -58,6 +63,7 @@
   result = parser.invoke(message)
   print(result)  # 输出: {'name': '张三', 'age': 18}
   ```
+  :::
   
   > **重点**：**强烈建议**在 prompt 中明确要求 LLM 输出合法的 JSON 格式。
   >
@@ -74,6 +80,7 @@
 - **适用场景**：需要类型校验和更复杂结构时。
 - **示例代码**：
 
+  :::demo config={"packages":["langchain","pydantic"]}
   ```python
   from langchain.output_parsers import PydanticOutputParser
   from pydantic import BaseModel
@@ -86,6 +93,7 @@
   result = parser.invoke('{"name": "李四", "age": 20}')
   print(result)  # 输出: Person(name='李四', age=20)
   ```
+  :::
 
   > **重点**：PydanticOutputParser 能自动校验字段类型，**大大提升数据安全性**。在模型外的数据也可以被过滤掉
   >
@@ -106,10 +114,14 @@
 
   > 通过 `get_format_instructions()` 可以获取生成约定结构的**提示词**，在给AI的提示词里加入这个提示词，就可以得到相应的输出了
   >
+  > :::demo config={"packages":["langchain","pydantic","langchain_deepseek"]}
   > ```python
   > from pydantic import BaseModel, Field
   > from langchain_core.output_parsers import PydanticOutputParser, JsonOutputParser
   > from langchain_core.prompts import ChatPromptTemplate
+  > from langchain_deepseek import ChatDeepSeek
+  >
+  > llm = ChatDeepSeek(model_name="deepseek-chat", api_key="you_api_key")
   > 
   > class Joke(BaseModel):
   > 	subject: str = Field(description="笑话的主题")
@@ -126,6 +138,7 @@
   > 
   > result = chain.invoke({"input": "我想听一个关于狗的笑话"})
   > ```
+  > :::
 
 ### 5️⃣ OutputFixingParser
 
@@ -133,13 +146,14 @@
 - **适用场景**：LLM 输出不稳定、偶尔格式错误时。
 - **示例代码**：
 
+  :::demo config={"packages":["langchain","pydantic","langchain_deepseek"]}
   ```python
   from langchain.output_parsers.fix import OutputFixingParser
   from langchain_core.output_parsers import PydanticOutputParser
   from pydantic import BaseModel
-  from my_openai.deepseekv3 import get_deepseek_v3_client
+  from langchain_deepseek import ChatDeepSeek
   
-  llm = get_deepseek_v3_client()
+  llm = ChatDeepSeek(model_name="deepseek-chat", api_key="you_api_key")
   
   class Person(BaseModel):
       name: str
@@ -151,6 +165,7 @@
   result = fix_parser.invoke('{"name": "张三", "age": "18"}')
   print(result)  # 输出: Person(name='张三', age=18)
   ```
+  :::
   
   > **重点**：**提升健壮性**，但会增加调用次数和成本。
 

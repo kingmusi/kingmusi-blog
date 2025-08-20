@@ -26,6 +26,9 @@ export default function parseCode(code: string, type: string): ({ type: string, 
     case 'tsx':
     case 'jsx':
       return { type: 'react', code: enCode(tsxToJs(code)) }
+    case 'python':
+    case 'py':
+      return { type: 'python', code: enCode(code) }
   }
 
   return null

@@ -34,6 +34,7 @@ export default defineUserConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/pwa/favicon-16x16.png' }],
     ['link', { rel: 'shortcut icon', href: '/pwa/favicon.ico' }],
     ['meta', { rel: 'theme-color', content: '#ffffff' }],
+    ['script', { src: '/mini-coi.js' }],
     ['link', { rel: 'preconnect', href: 'https://www.googletagmanager.com' }], // googleAnalytics预连接
     ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }], // pwa
     ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }], // 百度收录验证
@@ -99,6 +100,14 @@ export default defineUserConfig({
       type: 'demo',
       render(tokens, idx) {
         if (tokens[idx].nesting === 1) {
+          const info = []
+          if (tokens[idx].type === 'container_demo_open') {
+            let originInfo = tokens[idx].info
+            if (typeof originInfo === 'string') {
+              originInfo = originInfo.replace('demo', '')
+              info.push(...originInfo.split(' ').filter(Boolean))
+            }
+          }
           const content: Record<string, string> = {}
           const raw: Record<string, string> = {}
 
@@ -126,7 +135,7 @@ export default defineUserConfig({
             fn(token.content, token.info)
           }
 
-          return `<demo content="${encodeURIComponent(JSON.stringify(content))}" raw="${encodeURIComponent(JSON.stringify(raw))}">`;
+          return `<demo content="${encodeURIComponent(JSON.stringify(content))}" raw="${encodeURIComponent(JSON.stringify(raw))}" info="${encodeURIComponent(JSON.stringify(info))}">`;
         }
         return `</demo>`;
       }

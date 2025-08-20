@@ -8,8 +8,12 @@
 
 该对象接受少量示例和少量示例的格式化程序。
 
-```py
+:::demo config={"packages":["langchain_core","langchain_deepseek"]}
+```python
 from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
+from langchain_deepseek import ChatDeepSeek
+  
+llm = ChatDeepSeek(model_name="deepseek-chat", api_key="you_api_key")
 
 example_prompt = PromptTemplate.from_template("问题：{question}\n答案：{answer}")
 
@@ -37,5 +41,7 @@ prompt = FewShotPromptTemplate(
 
 chain = prompt | llm
 result = chain.invoke({"input": "清朝是中国历史上的哪个朝代？"})
+print(result)
 ```
+:::
 

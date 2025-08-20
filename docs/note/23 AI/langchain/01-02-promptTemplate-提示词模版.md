@@ -6,6 +6,7 @@
 
 **核心用法：**
 
+:::demo config={"packages":["langchain_core"]}
 ```python
 from langchain_core.prompts import PromptTemplate
 
@@ -14,6 +15,7 @@ result = prompt.format(text="LangChain 是一个强大的 LLM 应用开发框架
 print(result)
 # 输出：请用一句话总结以下内容：LangChain 是一个强大的 LLM 应用开发框架。
 ```
+:::
 
 > ⚠️ **注意**：  
 > `PromptTemplate` 适用于**单轮对话**或**静态提示**，如果需要多轮对话或消息流，建议使用 `ChatPromptTemplates`。
@@ -24,6 +26,7 @@ print(result)
 
 **典型用法：**
 
+:::demo config={"packages":["langchain_core"]}
 ```python
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -38,6 +41,7 @@ for msg in result:
 # SystemMessage(content='你是一个乐于助人的 AI 助手。')
 # HumanMessage(content='帮我写一个 Python 打印 Hello World 的例子。')
 ```
+:::
 
 **重点：**  
 - `ChatPromptTemplates` 支持**多角色消息**，如 system、user、ai 等。
@@ -53,6 +57,7 @@ for msg in result:
 
 **典型用法：**
 
+:::demo config={"packages":["langchain_core"]}
 ```python
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
@@ -77,6 +82,7 @@ for msg in result:
 # AIMessage(content='你好！有什么可以帮您？')
 # HumanMessage(content="请把 'LangChain' 翻译成中文")
 ```
+:::
 
 **重点：**  
 - `MessagesPlaceholder` 允许你**动态插入消息**

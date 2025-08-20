@@ -1,16 +1,16 @@
 <template>
   <div class="my-demo">
-    <div class="example" ref="exampleRef">
+    <div class="example" :class="{ 'no-raw': !showRaw }" ref="exampleRef">
       <component v-if="childComponent" :is="childComponent" />
     </div>
-    <div class="tools">
+    <div class="tools" v-show="showRaw">
       <button @click="showCode = !showCode">
         <i>
           <svg t="1737553668146" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4648" width="200" height="200"><path d="M300.224 224L32 525.76l268.224 301.76 71.776-63.776-211.552-237.984 211.552-237.984zM711.744 224L640 287.776l211.552 237.984L640 763.744l71.744 63.776 268.256-301.76z" p-id="4649"></path></svg>
         </i>
       </button>
     </div>
-    <transition name="scale">
+    <transition name="scale" v-show="showRaw">
       <div v-show="showCode" class="code">
         <div class="vp-tabs">
           <div class="vp-tabs-nav">
@@ -33,10 +33,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, shallowRef, h } from 'vue'
+import { onMounted, ref, shallowRef, h, onBeforeUnmount } from 'vue'
+import { loadScript, loadLink } from '../utils/loadScript'
 
 const showCode = ref(true)
 const exampleRef = ref<HTMLDivElement | null>(null)
+const showRaw = ref(true)
 
 // 子组件
 const childComponent = shallowRef<any>(null)
@@ -44,7 +46,17 @@ const childComponent = shallowRef<any>(null)
 const props = defineProps<{
   content: string
   raw: string
+  info?: string
 }>()
+
+// 解析 info
+const info: string[] = []
+if (props.info) {
+  const res = JSON.parse(decodeURIComponent(props.info))
+  if (Array.isArray(res)) {
+    info.push(...res)
+  }
+}
 // 解析 raw
 const raw = JSON.parse(decodeURIComponent(props.raw))
 for (const key in raw) {
@@ -158,6 +170,73 @@ if (contentKeys.has('react')) {
     }
   })
 }
+
+if (contentKeys.has('python')) {
+  loadScript('https://pyscript.net/releases/2025.8.1/core.js')
+  loadLink('https://pyscript.net/releases/2025.8.1/core.css')
+
+  const attributes: Record<string, string> = {}
+  for (const s of info) {
+    const [key, value] = s.split('=')
+    if (key && value) {
+      attributes[key] = value
+    }
+  }
+  const script = document.createElement('script')
+  script.type = 'py-editor'
+  script.textContent = content.python
+  for (const key in attributes) {
+    script.setAttribute(key, attributes[key])
+  }
+  let observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === 'childList' && mutation.addedNodes.length) {
+        for (const node of Array.from(mutation.addedNodes)) {
+          const n = node as HTMLElement
+          if (n.tagName === 'PY-EDITOR') {
+            const editor = n.querySelector('.py-editor-input') as HTMLDivElement
+            const shadowRoot = editor.lastElementChild?.shadowRoot
+            if (shadowRoot) {
+              const style = shadowRoot.querySelector('style')
+              if (style) {
+                style.textContent = `${style.textContent}
+.cm-line {
+  color: #4b2e2b;
+}
+.ͼd[class] {
+  color: #41ae3c;
+}
+.ͼc[class] {
+  color: #0eb0c9;
+}
+.ͼm[class] {
+  color: #b89485;
+}
+`
+
+              }
+            }
+          }
+        }
+        observer.disconnect()
+      }
+    }
+  })
+  onMounted(() => {
+    exampleRef.value?.appendChild(script)
+    showRaw.value = false
+    if (exampleRef.value) {
+      exampleRef.value.style.color = '#000'
+    }
+    observer.observe(exampleRef.value!, {
+      childList: true,
+    })
+  })
+  onBeforeUnmount(() => {
+    exampleRef.value?.removeChild(script)
+    observer?.disconnect?.()
+  })
+}
 </script>
 
 <style scoped lang="scss">
@@ -185,6 +264,9 @@ if (contentKeys.has('react')) {
     box-sizing: border-box;
     border: 1px solid var(--vp-c-border);
     border-radius: 8px 8px 0 0;
+    &.no-raw {
+      border-radius: 8px;
+    }
   }
   .tools {
     display: flex;

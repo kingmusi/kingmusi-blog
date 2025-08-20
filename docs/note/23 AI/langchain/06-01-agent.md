@@ -8,14 +8,16 @@
 from langchain import hub
 
 prompt = hub.pull("hwchase17/openai-functions-agent")
+print(prompt)
 ```
 
-> ```
-> [SystemMessagePromptTemplate(prompt=PromptTemplate(input_variables=[], temp
-> late='You are a helpful assistant')), MessagesPlaceholder(variable_name='ch
-> at_history', optional=True), HumanMessagePromptTemplate(prompt=PromptTempla
-> te(input_variables=['input'], template='{input}')), MessagesPlaceholder(var
-> iable_name='agent_scratchpad')]
+> ```python
+> [
+>   SystemMessagePromptTemplate(prompt=PromptTemplate(input_variables=[], template='You are a helpful assistant')),
+>   MessagesPlaceholder(variable_name='chat_history', optional=True),
+>   HumanMessagePromptTemplate(prompt=PromptTemplate(input_variables=['input'], template='{input}')),
+>   MessagesPlaceholder(variable_name='agent_scratchpad')
+> ]
 > ```
 
 2. 构建agent
@@ -44,6 +46,36 @@ respose = agent_executor.invoke({ "input": "你好" })
 ```
 {'input': '你好', 'output': '你好！有什么我可以帮助你的吗？'}
 ```
+
+5. 整体代码
+
+:::demo config={"packages":["langchain","langchain_deepseek"]}
+```python
+from langchain.agents import create_tool_calling_agent, AgentExecutor
+from langchain_deepseek import ChatDeepSeek
+from langchain_core.prompts import SystemMessagePromptTemplate, MessagesPlaceholder, PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate
+from langchain_core.tools import tool
+
+@tool
+def get_weather(city: str) -> str:
+  """获取天气状况"""
+  return "天晴晴朗"
+
+llm = ChatDeepSeek(model_name="deepseek-chat", api_key="your_api_key")
+tools = [get_weather]
+prompt = ChatPromptTemplate.from_messages([
+  SystemMessagePromptTemplate(prompt=PromptTemplate(input_variables=[], template='You are a helpful assistant')),
+  MessagesPlaceholder(variable_name='chat_history', optional=True),
+  HumanMessagePromptTemplate(prompt=PromptTemplate(input_variables=['input'], template='{input}')),
+  MessagesPlaceholder(variable_name='agent_scratchpad')
+])
+
+agent = create_tool_calling_agent(llm, tools, prompt)
+agent_executor = AgentExecutor(agent=agent, tools=tools)
+respose = agent_executor.invoke({ "input": "你好" })
+print(respose)
+```
+:::
 
 ## 添加记忆
 
