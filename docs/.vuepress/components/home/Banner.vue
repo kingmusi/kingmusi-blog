@@ -6,7 +6,12 @@
           <h3>{{ bannerText[index] }}</h3>
         </div>
         <div class="img-box">
-          <img :src="`/banner/${index + 1}.webp`" loading="lazy" style="transform: translateX(0)" />
+          <img
+            class="loading"
+            :src="`/banner/${index + 1}_thumbnai.webp`"
+            :data-src="`/banner/${index + 1}.webp`"
+            style="transform: translateX(0)"
+          />
         </div>
       </div>
     </div>
@@ -35,12 +40,10 @@ onMounted(async () => {
 
   const slides = container.querySelectorAll('.swiper-slide')
 
-  const [SwiperRes, AutoPlayRes, LayLoadRes] = await Promise.allSettled([
+  const [SwiperRes, AutoPlayRes] = await Promise.allSettled([
     import('tiny-swiper'),
     // @ts-ignore
     import('tiny-swiper/lib/modules/autoPlay.min.js'),
-    // @ts-ignore
-    import('tiny-swiper/lib/modules/lazyload.min.js')
   ])
 
   if (SwiperRes.status === 'fulfilled') {
@@ -48,9 +51,6 @@ onMounted(async () => {
     const plugins = []
     if (AutoPlayRes.status === 'fulfilled') {
       plugins.push(AutoPlayRes.value.default)
-    }
-    if (LayLoadRes.status === 'fulfilled') {
-      plugins.push(LayLoadRes.value.default)
     }
 
     swiper = new Swiper(container, {
@@ -94,6 +94,22 @@ onBeforeUnmount(() => {
     swiper.destroy()
     swiper = null
     window.removeEventListener('resize', resize)
+  }
+})
+
+onMounted(() => {
+  const imagesList = containerRef.value?.querySelectorAll('img')
+  const images = Array.from(imagesList || [])
+  for (const image of images) {
+    const src = image.dataset.src
+    if (src) {
+      const myImage = new Image()
+      myImage.src = src
+      myImage.onload = () => {
+        image.src = src
+        image.classList.remove('loading')
+      }
+    }
   }
 })
 </script>
@@ -158,6 +174,10 @@ onBeforeUnmount(() => {
           transform: translateX(50%);
           transition-timing-function: cubic-bezier(0.5, 0, 0, 1);
           transition-property: transform;
+
+          &.loading {
+            filter: blur(80px);
+          }
         }
       }
     }

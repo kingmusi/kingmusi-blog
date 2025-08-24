@@ -2,6 +2,9 @@
 @use './article.scss';
 :root {
   --vp-c-accent: var(--main-6);
+  --vp-c-accent-bg: var(--main-4);
+  --back-to-top-c-accent-bg: var(--main-3);
+  --back-to-top-c-accent-hover: var(--main-4);
   --c-brand: var(--main-6);
   --c-brand-light: var(--main-4);
   --c-border-dark: var(--main-6);
@@ -35,5 +38,15 @@
 
   p img {
     background-color: #fff;
+  }
+}
+
+@media (max-width: 719px) {
+  .vp-navbar-item {
+    width: 100%;
+    font-size: 1.3rem;
+    &:not(:last-child) {
+      margin-bottom: 0.3rem;
+    }
   }
 }

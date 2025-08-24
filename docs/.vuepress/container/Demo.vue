@@ -172,6 +172,9 @@ if (contentKeys.has('react')) {
 }
 
 if (contentKeys.has('python')) {
+  if (!Array.from(document.scripts).some(s => s.src === location.host + '/mini-coi.js')) {
+    loadScript('/mini-coi.js')
+  }
   loadScript('https://pyscript.net/releases/2025.8.1/core.js')
   loadLink('https://pyscript.net/releases/2025.8.1/core.css')
 

@@ -1,7 +1,7 @@
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
 /*! mini-coi - Andrea Giammarchi and contributors, licensed under MIT */
 (({ document: d, navigator: { serviceWorker: s } }) => {
-  if (d) {
+  if (d && d.currentScript) {
     const { currentScript: c } = d;
     s.register(c.src, { scope: c.getAttribute('scope') || '.' }).then(r => {
       r.addEventListener('updatefound', () => location.reload());
