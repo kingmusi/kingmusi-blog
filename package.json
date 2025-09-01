@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@uiw/react-json-view": "^2.0.0-alpha.34",
+    "@zumer/snapdom": "^1.9.9",
     "dayjs": "^1.11.13",
     "particles.js-es": "^1.0.7",
     "react": "^18.3.1",
@@ -53,6 +54,7 @@
     "tiny-swiper": "^2.2.0",
     "typeson-registry": "^11.1.1",
     "veaury": "^2.6.2",
+    "vue-easy-lightbox": "^1.19.0",
     "vue-window-size": "^2.0.0",
     "vue3-sfc-loader": "^0.9.5"
   }
