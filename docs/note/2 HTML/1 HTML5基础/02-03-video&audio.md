@@ -1,4 +1,4 @@
-﻿# Audio 和 Video
+# video & audio
 
 ## 标签
 
@@ -9,7 +9,7 @@
   <video src="m.mp4" width=320 height=400 />
   ```
 
-- 可以向标签中插入文本，用于浏览器不支持这两个标签时，显示提示文字
+- 可以向标签中插入文本，用于浏览器不支持这个标签时，显示提示文字
 
   ```html
   <audio src="m.mp3">您的浏览器不支持</audio>
@@ -26,19 +26,39 @@
   </audio>
   ```
 
-##### 公共的属性
+##### 属性
 
-| 标签名                 | 值                                                           | 说明                                                    |
-| ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
-| autoplay               | autoplay                                                     | 如果出现该属性，则在就绪后马上播放。                    |
-| controls               | controls                                                     | 如果出现该属性，则向用户显示控件（比如播放/暂停按钮）。 |
-| loop                   | loop                                                         | 如果出现该属性，则每当结束时重新开始播放。              |
-| muted                  | muted                                                        | 如果出现该属性，则输出静音。                            |
-| preload                | auto：页面加载后载入整个音频<br/>metadata：假面加载后只载入元数据<br/>none：无需加载数据 | 规定当网页加载时，是否默认被加载以及如何被加载。        |
-| src                    | url                                                          | 文件的url                                               |
-| poster*（video 独有）* | url                                                          | 视屏封面用一张图片替代                                  |
-| height*（video 独有）* | number                                                       | 视频元素的高度                                          |
-| width*（video 独有）*  | number                                                       | 视频元素的宽度                                          |
+| 标签名                 | 值                                                           | 说明                                                         |
+| ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| autoplay               | boolean                                                      | 如果出现该属性，则在就绪后马上播放。                         |
+| controls               | boolean                                                      | 如果出现该属性，则向用户显示控件（比如播放/暂停按钮）。      |
+| loop                   | boolean                                                      | 如果出现该属性，则每当结束时重新开始播放。                   |
+| muted                  | boolean                                                      | 如果出现该属性，则输出静音。                                 |
+| preload                | auto：页面加载后载入整个音频<br/>metadata：假面加载后只载入元数据<br/>none：无需加载数据 | 规定当网页加载时，是否默认被加载以及如何被加载。             |
+| src                    | url                                                          | 文件的url                                                    |
+| currentTime            | float（单位秒）                                              | 指定当前播放位置，如果尚未开始播放，则会从这个属性指定的位置开始播放 |
+| poster*（video 独有）* | url                                                          | 视屏封面用一张图片替代                                       |
+| height*（video 独有）* | number                                                       | 视频元素的高度                                               |
+| width*（video 独有）*  | number                                                       | 视频元素的宽度                                               |
+
+## 视频字幕
+
+`<track>`标签用于指定视频的字幕，格式是 WebVTT （`.vtt`文件），放置在`<video>`标签内部
+
+```html
+<video controls src="sample.mp4">
+   <track label="英文" kind="subtitles" src="subtitles_en.vtt" srclang="en">
+   <track label="中文" kind="subtitles" src="subtitles_cn.vtt" srclang="cn" default>
+</video>
+```
+
+##### 属性
+
+| 标签名  | 值      | 说明                               |
+| ------- | ------- | ---------------------------------- |
+| label   | string  | 播放器显示的字幕名称，供用户选择。 |
+| src     | url     | vtt 字幕文件的网址。               |
+| default | boolean | 是否默认打开，布尔属性。           |
 
 ## 使用 JavaScript 操控
 
