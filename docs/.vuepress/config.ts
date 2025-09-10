@@ -91,10 +91,16 @@ export default defineUserConfig({
     googleAnalyticsPlugin({ id: 'G-40Q2D0LN9P' }),
     pwaPlugin({}),
     docsearchPlugin({
-      apiKey: '4488710a3e7070c0782ffe7717b52799',
-      indexName: 'kingmusi',
-      appId: 'XNAMRA0CZ0'
+      apiKey: '533f6107417a153d0ee193ebfabd68f9',
+      indexName: 'musiblog',
+      appId: 'TYLHXYULAM'
     }),
+    // kingmusi.xyz 的 docsearch
+    // docsearchPlugin({
+    //   apiKey: '4488710a3e7070c0782ffe7717b52799',
+    //   indexName: 'kingmusi',
+    //   appId: 'XNAMRA0CZ0'
+    // }),
     (app) => markdownContainerPlugin({
       type: 'demo',
       render(tokens, idx) {
