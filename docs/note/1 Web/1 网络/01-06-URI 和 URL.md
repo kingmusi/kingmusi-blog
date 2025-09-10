@@ -13,7 +13,7 @@
 
 ## URI 格式
 
-![](https://cdn.kingmusi.xyz/Web/%E7%BD%91%E7%BB%9C/URI%E6%A0%BC%E5%BC%8F.webp)
+![](https://cdn.musiblog.com/Web/%E7%BD%91%E7%BB%9C/URI%E6%A0%BC%E5%BC%8F.webp)
 
 1. 协议方案名：协议类型，不区分大小写，最后附加一个冒号
 2. 登录信息（可选）：指定用户名和密码作为从服务器端获取资源时必要的登录信息

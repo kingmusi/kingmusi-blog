@@ -28,7 +28,7 @@
 ```js
 // demo
 {
-    "name": "https://www.kingmusi.xyz/detail/3aa95d35-4a56-428b-b2c0-9a8fc8221fe8",
+    "name": "https://www.musiblog.com/detail/3aa95d35-4a56-428b-b2c0-9a8fc8221fe8",
     "entryType": "navigation",
     "startTime": 0,
     "duration": 654.7999999970198,
@@ -70,7 +70,7 @@
 
 ```js
 {
-    "name": "https://www.kingmusi.xyz/detail/3aa95d35-4a56-428b-b2c0-9a8fc8221fe8",
+    "name": "https://www.musiblog.com/detail/3aa95d35-4a56-428b-b2c0-9a8fc8221fe8",
     "entryType": "navigation",
     "startTime": 0,
     "duration": 654.7999999970198,

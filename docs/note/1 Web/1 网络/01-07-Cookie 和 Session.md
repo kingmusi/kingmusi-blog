@@ -23,7 +23,7 @@
 
 > 没有 **Cookie** 信息状态下的请求，服务器为它生成一个 **sid**，并存入 **Cookie** 中返回
 >
-> ![](https://cdn.kingmusi.xyz/Web/%E7%BD%91%E7%BB%9C/cook%E5%92%8Csessino-cookie%E7%90%86%E8%A7%A31.webp)
+> ![](https://cdn.musiblog.com/Web/%E7%BD%91%E7%BB%9C/cook%E5%92%8Csessino-cookie%E7%90%86%E8%A7%A31.webp)
 >
 > 请求报文（没有 Cookie 信息的状态）
 >
@@ -45,7 +45,7 @@
 
 > 第 **2** 次以后（存有 **Cookie** 信息状态）的请求
 >
-> ![](https://cdn.kingmusi.xyz/Web/%E7%BD%91%E7%BB%9C/cook%E5%92%8Csessino-cookie%E7%90%86%E8%A7%A32.webp)
+> ![](https://cdn.musiblog.com/Web/%E7%BD%91%E7%BB%9C/cook%E5%92%8Csessino-cookie%E7%90%86%E8%A7%A32.webp)
 >
 > 请求报文（自动发送保存着的 Cookie 信息）
 >

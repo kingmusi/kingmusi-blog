@@ -42,7 +42,7 @@ async function sitemap() {
     }
   }
 
-  const stream = new SitemapStream({ hostname: 'https://www.kingmusi.xyz/' })
+  const stream = new SitemapStream({ hostname: 'https://www.musiblog.com/' })
   const data = await streamToPromise(Readable.from(links).pipe(stream))
   fs.writeFileSync(join(distPath, 'sitemap.xml'), data)
 }

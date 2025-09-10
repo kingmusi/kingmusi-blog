@@ -2,7 +2,7 @@
 
 ## 工作流程
 
-![](https://cdn.kingmusi.xyz/Web/%E7%BD%91%E7%BB%9C/https-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.webp)
+![](https://cdn.musiblog.com/Web/%E7%BD%91%E7%BB%9C/https-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.webp)
 
 1. 用户在浏览器发起HTTPS请求，默认使用服务端的443端口进行连接；
 2. HTTPS需要使用一套**CA数字证书**，证书内会附带一个**公钥Pub**，而与之对应的**私钥Private**保留在服务端不公开；
@@ -24,7 +24,7 @@
 
 而浏览器此时一无所知，傻乎乎地使用公钥B1加密了密钥K发送出去，又被**中间人截获**，中间人利用自己的私钥B2解密，得到密钥K，再使用服务端的公钥A1加密传送给服务端，完成了通信链路，而服务端和客户端毫无感知。
 
-![](https://cdn.kingmusi.xyz/Web/%E7%BD%91%E7%BB%9C/https-%E4%B8%AD%E9%97%B4%E6%94%BB%E5%87%BB.webp)
+![](https://cdn.musiblog.com/Web/%E7%BD%91%E7%BB%9C/https-%E4%B8%AD%E9%97%B4%E6%94%BB%E5%87%BB.webp)
 
 所以通过**数字签名**防伪
 

@@ -28,7 +28,7 @@ const { join } = require('path')
 const links = [{ url: '/page-1/', changefreq: 'weekly', priority: 0.3, lastmod: '202-07-26' }]
 
 // host
-const stream = new SitemapStream({ hostname: 'https://www.kingmusi.xyz' })
+const stream = new SitemapStream({ hostname: 'https://www.musiblog.com' })
 
 streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
   fs.writeFileSync(join(__dirname, 'sitemap.xml'), data)

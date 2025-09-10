@@ -75,7 +75,7 @@ Text.rich(TextSpan(
   children: [
     TextSpan(text: 'Home: '),
     TextSpan(
-      text: 'https://www.kingmusi.xyz',
+      text: 'https://www.musiblog.com',
       style: TextStyle(color: Colors.blue)
     )
   ]

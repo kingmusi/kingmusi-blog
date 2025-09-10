@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
   
-Sitemap: https://www.kingmusi.xyz/sitemap.xml
+Sitemap: https://www.musiblog.com/sitemap.xml
