@@ -3,6 +3,7 @@ import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
 import { visualizer } from 'rollup-plugin-visualizer'
 
+import { seoPlugin } from '@vuepress/plugin-seo'
 import { createPage } from '@vuepress/core'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
@@ -36,7 +37,9 @@ export default defineUserConfig({
     ['meta', { rel: 'theme-color', content: '#ffffff' }],
     ['link', { rel: 'preconnect', href: 'https://www.googletagmanager.com' }], // googleAnalytics预连接
     ['meta', { rel: 'msapplication-config', content: '/pwa/browserconfig.xml' }], // pwa
-    ['meta', { name: 'baidu-site-verification', content: 'code-JfM5X4P2zS' }], // 百度收录验证
+    ['meta', { name: 'google-site-verification', content: 'pHhCDqSzlO70sU25V4Mlgt_mmIdQ8jDNu0q00qDMDpg' }], // google收录验证
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-vG8agylBrW' }], // 百度收录验证
+    ['meta', { name: 'msvalidate.01', content: '4DD81ABE8B8A617A65056299E6042D5A' }], // bing收录验证
     ['meta', { name: '360-site-verification', content: 'bbeb6891b4135a6e65877a7e7d4be2cd' }], // 360 收录验证
     // markdownStylizePlugin scss中注入样式不生效，所以直接在style中注入
     ['style', {}, `
@@ -71,6 +74,9 @@ export default defineUserConfig({
   }),
   shouldPrefetch: false,
   plugins: [
+    seoPlugin({
+      hostname: 'www.musiblog.com'
+    }),
     // 水印
     watermarkPlugin({}),
     // 数学公式

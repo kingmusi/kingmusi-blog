@@ -1,46 +1,6 @@
-# cookie sessionStorage localStorage
+# Web-Storage
 
-## cookie
-
-- 使用 `document.cookie` 获取和改变
-
-:::demo
-
-```vue
-<template>
-	<json-viewer :data="data"></json-viewer>
-	<input v-model="inputValue" />
-</template>
-
-<script setup>
-import { ref, watch } from 'vue'
-
-// json 显示的值
-const data = ref(jsonStringify({
-    cookie: document.cookie
-}))
-
-// input 值
-const inputValue = ref(document.cookie)
-// 把inputValue设置为当前 document.cookie，重新更新显示
-watch(inputValue, (value) => {
-    document.cookie = value
-    data.value = jsonStringify({
-    	cookie: document.cookie
-	})
-})
-</script>
-```
-
-:::
-
-> **cookie** 作用域
->
-> 1. 省略**domain**参数，那么**domain**默认为当前域名。
-> 2. **domain**参数可以设置父域名以及自身，但不能设置其它域名，包括子域名，否则**cookie**不起作用。
-> 3. 有效作用域：**domain**本身以及**domain**下的所有子域名。
-
-## sessionStorage localStorage
+## Storage API
 
 - 设置数据：**setItem(key,value)**
 - 获取数据：**getItem(key)**
@@ -138,6 +98,8 @@ function handleClear() {
 
 :::
 
+## StorageEvent
+
 当前页面使用的 **localStorage** 被其他页面修改时会触发 **StorageEvent** 事件
 
 > 事件在同一个域下的不同页面之间触发，即在 A 页面注册了 storge 的监听处理，只有在跟 A 同域名下的 B 页面操作 storage 对象，A 页面才会被触发 storage 事件
@@ -171,7 +133,7 @@ window.addEventListener('storage', (e) => {
 - **newValue**：键被设置的新值，若键被删除则为 **null**
 - **oldValue**：键变化之前的值
 
-## 三者区别
+## cookie seesionStorage localStorage的区别
 
 #### 传递：
 

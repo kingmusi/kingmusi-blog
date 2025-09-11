@@ -28,6 +28,7 @@
     "@vuepress/plugin-markdown-math": "^2.0.0-rc.112",
     "@vuepress/plugin-markdown-stylize": "^2.0.0-rc.112",
     "@vuepress/plugin-pwa": "^2.0.0-rc.112",
+    "@vuepress/plugin-seo": "^2.0.0-rc.112",
     "@vuepress/plugin-watermark": "^2.0.0-rc.112",
     "@vuepress/theme-default": "^2.0.0-rc.112",
     "deasync": "^0.1.30",
