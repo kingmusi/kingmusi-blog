@@ -1,4 +1,4 @@
-# MCP 客户端——nodejs
+# MCP Client nodejs
 
 ```markmap
 - MCP 客户端
