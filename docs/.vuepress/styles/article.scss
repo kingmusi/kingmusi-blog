@@ -54,7 +54,8 @@ h1, h2, h3, h4, h5, h6 {
 
 // 强调
 strong {
-  color: var(--main-4);
+  // color: var(--main-4);
+  font-weight: 900;
 }
 
 // 表格
