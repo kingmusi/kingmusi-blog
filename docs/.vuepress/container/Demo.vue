@@ -36,7 +36,7 @@
 import { onMounted, ref, shallowRef, h, onBeforeUnmount } from 'vue'
 import { loadScript, loadLink } from '../utils/loadScript'
 
-const showCode = ref(true)
+const showCode = ref(false)
 const exampleRef = ref<HTMLDivElement | null>(null)
 const showRaw = ref(true)
 
