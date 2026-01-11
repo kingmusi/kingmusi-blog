@@ -22,8 +22,14 @@
               :class="{ active: v === activeRaw }"
               @click="activeRaw = v"
             >{{ v }}</button>
-            <div class="vp-tab" style="display: block;">
-              <div v-html="raw[activeRaw]"></div>
+            <div
+              v-for="(html, v) in raw"
+              :key="v"
+              v-show="v === activeRaw"
+              class="vp-tab"
+              style="display: block;"
+            >
+              <div v-html="html"></div>
             </div>
           </div>
         </div>

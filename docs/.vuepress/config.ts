@@ -155,6 +155,15 @@ export default defineUserConfig({
       type: 'dom',
       render(tokens, idx) {
         if (tokens[idx].nesting === 1) {
+          const info = []
+          if (tokens[idx].type === 'container_dom_open') {
+            let originInfo = tokens[idx].info
+            if (typeof originInfo === 'string') {
+              originInfo = originInfo.replace('dom', '')
+              info.push(...originInfo.split(' ').filter(Boolean))
+            }
+          }
+
           const content: Record<string, string> = {}
 
           const fn = (code: string, type: string) => {
@@ -178,7 +187,7 @@ export default defineUserConfig({
             fn(token.content, token.info)
           }
 
-          return `<Dom content="${encodeURIComponent(JSON.stringify(content))}">`;
+          return `<Dom content="${encodeURIComponent(JSON.stringify(content))}" info="${encodeURIComponent(JSON.stringify(info))}">`;
         }
         return `</Dom>`;
       }

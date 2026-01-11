@@ -19,32 +19,6 @@ import { onMounted, ref, shallowRef, h, onBeforeUnmount } from 'vue'
 import { snapdom } from '@zumer/snapdom';
 import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox'
 
-// 子组件
-const childComponent = shallowRef<any>(null)
-// 容器
-const exampleRef = ref<HTMLDivElement | null>(null)
-
-// 图片预览
-const {
-  show,
-  visibleRef, 
-  imgsRef
-} = useEasyLightbox({
-  imgs: ''
-})
-async function handleCapture() {
-  if (imgsRef.value) {
-    show()
-    return
-  }
-  const dom = exampleRef.value
-  if (dom) {
-    const res = await snapdom(dom, { scale: 2 })
-    imgsRef.value = res.url
-    show()
-  }
-}
-
 const props = defineProps<{
   content: string
   info?: string
@@ -64,6 +38,35 @@ const contentKeys = new Set<string>()
 for (const key in content) {
   content[key] = decodeURIComponent(content[key])
   contentKeys.add(key)
+}
+
+// 子组件
+const childComponent = shallowRef<any>(null)
+// 容器
+const exampleRef = ref<HTMLDivElement | null>(null)
+
+// 图片预览
+const {
+  show,
+  visibleRef, 
+  imgsRef
+} = useEasyLightbox({
+  imgs: ''
+})
+async function handleCapture() {
+  if (info.includes('no-img')) {
+    return
+  }
+  if (imgsRef.value) {
+    show()
+    return
+  }
+  const dom = exampleRef.value
+  if (dom) {
+    const res = await snapdom(dom, { scale: 2 })
+    imgsRef.value = res.url
+    show()
+  }
 }
 
 if (['html', 'css', 'js'].some(v => contentKeys.has(v))) {
